@@ -2,15 +2,12 @@
 // import * as serviceWorker from "./serviceWorker";
 import React from "react";
 import { render } from "react-dom";
-import d3 from "d3";
 
 // Styles
 import "./index.css";
 
 // Component Imports
 import App from "./App";
-
-window.d3 = d3;
 
 render(
   <React.StrictMode>
