@@ -14,7 +14,7 @@ export const biseccion = (f, a, b, tol, iter_max) => {
 
   let i = 0;
   for (i; i < iter_max + 1; i++) {
-    let x = (a + b) / 2;
+    x = (a + b) / 2;
     let fx = f(x);
 
     console.log(
@@ -48,5 +48,5 @@ export const biseccion = (f, a, b, tol, iter_max) => {
   }
 
   let raiz = x;
-  return [raiz, i, converge];
+  return [raiz.toFixed(4), i, converge];
 };

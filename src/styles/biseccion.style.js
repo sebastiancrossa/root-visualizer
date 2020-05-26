@@ -8,7 +8,7 @@ export const StyledContainer = styled(Container)`
 `;
 
 export const Heading = styled.div`
-  margin-top: 3rem;
+  margin: 3rem 0 2rem 0;
   padding: 1rem;
 
   h1 {
@@ -30,6 +30,8 @@ export const InputsSection = styled.div`
   margin: 0 auto 2rem auto;
 
   padding: 1rem;
+
+  border: 2px solid #e0e2e4;
 `;
 
 export const Inputs = styled.div`
@@ -37,4 +39,20 @@ export const Inputs = styled.div`
   justify-content: space-between;
 
   margin-bottom: 1rem;
+`;
+
+export const Resultados = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+
+  padding: 2rem 0;
+
+  h1,
+  p {
+    margin: 0;
+  }
+
+  p {
+    text-transform: uppercase;
+  }
 `;

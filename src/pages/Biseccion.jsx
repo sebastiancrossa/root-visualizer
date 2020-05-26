@@ -9,6 +9,7 @@ import {
   Heading,
   Inputs,
   InputsSection,
+  Resultados,
 } from "../styles/biseccion.style";
 
 const Biseccion = () => {
@@ -21,7 +22,24 @@ const Biseccion = () => {
     iter_max: "",
   });
 
-  const calcularMetodo = () => {};
+  const calcularMetodo = () => {
+    const { fn, limite_inf, limite_sup, tol, iter_max } = formState;
+
+    const func = new Function("x", `return ${fn}`);
+
+    console.log(func);
+
+    const resCalculo = biseccion(
+      func,
+      parseFloat(limite_inf),
+      parseFloat(limite_sup),
+      parseFloat(tol),
+      parseFloat(iter_max)
+    );
+
+    console.log(resCalculo);
+    setRes(resCalculo);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -31,8 +49,6 @@ const Biseccion = () => {
       [name]: value,
     });
   };
-
-  console.log(formState);
 
   return (
     <Layout>
@@ -50,7 +66,7 @@ const Biseccion = () => {
         <InputsSection>
           <Inputs>
             <div style={{ textAlign: "left" }}>
-              <label for="fn">Funcion: </label> <br />
+              <label htmlFor="fn">Funcion: </label> <br />
               <input
                 type="text"
                 id="fn"
@@ -62,7 +78,7 @@ const Biseccion = () => {
             </div>
 
             <div style={{ textAlign: "left" }}>
-              <label for="limite_inf">Limite inferior: </label> <br />
+              <label htmlFor="limite_inf">Limite inferior: </label> <br />
               <input
                 type="text"
                 id="limite_inf"
@@ -74,7 +90,7 @@ const Biseccion = () => {
             </div>
 
             <div style={{ textAlign: "left" }}>
-              <label for="limite_sup">Limite superior: </label> <br />
+              <label htmlFor="limite_sup">Limite superior: </label> <br />
               <input
                 type="text"
                 id="limite_sup"
@@ -86,7 +102,7 @@ const Biseccion = () => {
             </div>
 
             <div style={{ textAlign: "left" }}>
-              <label for="tol">Tolerancia: </label> <br />
+              <label htmlFor="tol">Tolerancia: </label> <br />
               <input
                 type="text"
                 id="tol"
@@ -98,7 +114,7 @@ const Biseccion = () => {
             </div>
 
             <div style={{ textAlign: "left" }}>
-              <label for="iter_max">Iteracion maxima: </label> <br />
+              <label htmlFor="iter_max">Iteracion maxima: </label> <br />
               <input
                 type="text"
                 id="iter_max"
@@ -110,10 +126,25 @@ const Biseccion = () => {
             </div>
           </Inputs>
 
-          <button>Calcular</button>
+          <button onClick={() => calcularMetodo()}>Calcular</button>
         </InputsSection>
 
-        <h1>{res ? res : "No res"}</h1>
+        <Resultados>
+          <div>
+            <p>Raiz</p>
+            <h1>{res ? res[0] : "Sin calculos"}</h1>
+          </div>
+
+          <div>
+            <p>Iteracion</p>
+            <h1>{res ? res[1] : "Sin calculos"}</h1>
+          </div>
+
+          <div>
+            <p>Converge</p>
+            <h1>{res ? (res[2] ? "Si" : "No") : "Sin calculos"}</h1>
+          </div>
+        </Resultados>
       </StyledContainer>
     </Layout>
   );
