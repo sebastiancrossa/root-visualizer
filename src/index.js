@@ -7,7 +7,7 @@ import { render } from "react-dom";
 import "./index.css";
 
 // Component Imports
-import App from "./App";
+import App from "./App.jsx";
 
 render(
   <React.StrictMode>
