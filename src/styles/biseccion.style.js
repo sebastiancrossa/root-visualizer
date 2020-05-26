@@ -29,14 +29,20 @@ export const InputsSection = styled.div`
   max-width: 70%;
   margin: 0 auto 2rem auto;
 
-  padding: 1rem;
+  padding: 1.3rem;
 
   border: 2px solid #e0e2e4;
 `;
 
 export const Inputs = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-areas:
+    "func func func func"
+    "inp1 inp2 inp3 inp4"
+    "calc calc calc calc";
+  grid-row-gap: 1.2rem;
+  grid-column-gap: 2rem;
+  justify-content: center;
 
   margin-bottom: 1rem;
 `;
@@ -72,7 +78,7 @@ export const IteracionesSection = styled.div`
   border-radius: 5px;
 
   overflow-y: scroll;
-  height: 25rem;
+  height: 25.5rem;
 
   background-color: #e2e8f0;
 `;

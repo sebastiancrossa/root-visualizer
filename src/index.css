@@ -5,6 +5,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.function-plot .annotation {
-  background-color: red;
+.function-plot .graph circle {
+  r: 4;
 }

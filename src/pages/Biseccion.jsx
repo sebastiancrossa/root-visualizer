@@ -5,6 +5,7 @@ import functionPlot from "function-plot";
 
 // Styles
 import Layout from "../components/layout";
+import { Button, Input } from "../style";
 import {
   StyledContainer,
   Heading,
@@ -119,9 +120,9 @@ const Biseccion = () => {
 
         <InputsSection>
           <Inputs>
-            <div style={{ textAlign: "left" }}>
+            <div style={{ gridArea: "func" }}>
               <label htmlFor="fn">Función: </label> <br />
-              <input
+              <Input
                 type="text"
                 id="fn"
                 name="fn"
@@ -131,9 +132,9 @@ const Biseccion = () => {
               <br />
             </div>
 
-            <div style={{ textAlign: "left" }}>
+            <div style={{ gridArea: "inp1" }}>
               <label htmlFor="limite_inf">Limite inferior: </label> <br />
-              <input
+              <Input
                 type="text"
                 id="limite_inf"
                 name="limite_inf"
@@ -143,9 +144,9 @@ const Biseccion = () => {
               <br />
             </div>
 
-            <div style={{ textAlign: "left" }}>
+            <div style={{ gridArea: "inp2" }}>
               <label htmlFor="limite_sup">Limite superior: </label> <br />
-              <input
+              <Input
                 type="text"
                 id="limite_sup"
                 name="limite_sup"
@@ -155,9 +156,9 @@ const Biseccion = () => {
               <br />
             </div>
 
-            <div style={{ textAlign: "left" }}>
+            <div style={{ gridArea: "inp3" }}>
               <label htmlFor="tol">Tolerancia: </label> <br />
-              <input
+              <Input
                 type="text"
                 id="tol"
                 name="tol"
@@ -167,9 +168,9 @@ const Biseccion = () => {
               <br />
             </div>
 
-            <div style={{ textAlign: "left" }}>
+            <div style={{ gridArea: "inp4" }}>
               <label htmlFor="iter_max">Iteración máxima: </label> <br />
-              <input
+              <Input
                 type="text"
                 id="iter_max"
                 name="iter_max"
@@ -180,13 +181,14 @@ const Biseccion = () => {
             </div>
           </Inputs>
 
-          <button
+          <Button
             onClick={() => {
               calcularMetodo();
             }}
+            style={{ gridArea: "calc" }}
           >
             Calcular
-          </button>
+          </Button>
         </InputsSection>
 
         <Resultados>
