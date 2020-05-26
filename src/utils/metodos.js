@@ -18,7 +18,7 @@ export const biseccion = (f, a, b, tol, iter_max) => {
     x = (a + b) / 2;
     let fx = f(x);
 
-    iterArr.push([i, x, fx, delta_x]);
+    iterArr.push([i, x.toFixed(4), fx.toFixed(4), delta_x.toFixed(4)]);
 
     console.log(
       "i: ",

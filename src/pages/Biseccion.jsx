@@ -23,10 +23,10 @@ const Biseccion = () => {
 
   const [res, setRes] = useState();
   const [formState, setFormState] = useState({
-    fn: "4 * x ^ 3 + x - 10",
+    fn: "4 * x ** 3 + x - 10",
     limite_inf: "1.0",
-    limite_sup: "2.0",
-    tol: "10**-5",
+    limite_sup: "100.0",
+    tol: "0.001",
     iter_max: "100",
   });
 
@@ -47,6 +47,7 @@ const Biseccion = () => {
 
     console.log(resCalculo);
     setRes(resCalculo);
+    showGraph(resCalculo[0]);
   };
 
   const handleInputChange = (e) => {
@@ -58,14 +59,46 @@ const Biseccion = () => {
     });
   };
 
-  const showGraph = () => {
+  const showGraph = (x) => {
+    let parsedFn = formState.fn;
+
+    // Parses our function so it makes sure that it uses ^ to represent an exponent
+    // This is needed since the graph library doesn't accept **
+    if (formState.fn.includes("**")) {
+      parsedFn = formState.fn.split("**").join("^");
+    }
+
     functionPlot({
       target: graphContainer.current,
+      tip: {
+        xLine: true, // dashed line parallel to y = 0
+        yLine: true,
+      },
       width: 480,
       height: 400,
+      xAxis: {
+        domain: [formState.limite_inf - 10, formState.limite_sup + 10],
+      },
       data: [
         {
-          fn: formState ? formState.fn : "x^2",
+          fn: parsedFn ? parsedFn : "x^2",
+        },
+        {
+          points: [[x, 0]],
+          fnType: "points",
+          graphType: "scatter",
+        },
+      ],
+      annotations: [
+        {
+          x: formState.limite_inf,
+          text: `x = ${formState.limite_inf}`,
+          color: "pink",
+        },
+        {
+          x: formState.limite_sup,
+          text: `x = ${formState.limite_sup}`,
+          color: "pink",
         },
       ],
     });
@@ -87,7 +120,7 @@ const Biseccion = () => {
         <InputsSection>
           <Inputs>
             <div style={{ textAlign: "left" }}>
-              <label htmlFor="fn">Funcion: </label> <br />
+              <label htmlFor="fn">Función: </label> <br />
               <input
                 type="text"
                 id="fn"
@@ -135,7 +168,7 @@ const Biseccion = () => {
             </div>
 
             <div style={{ textAlign: "left" }}>
-              <label htmlFor="iter_max">Iteracion maxima: </label> <br />
+              <label htmlFor="iter_max">Iteración máxima: </label> <br />
               <input
                 type="text"
                 id="iter_max"
@@ -150,7 +183,6 @@ const Biseccion = () => {
           <button
             onClick={() => {
               calcularMetodo();
-              showGraph();
             }}
           >
             Calcular
@@ -159,18 +191,18 @@ const Biseccion = () => {
 
         <Resultados>
           <div>
-            <p>Raiz</p>
+            <p>Raíz</p>
             <h1>{res ? (res[2] ? res[0] : "No converge") : "Sin calculos"}</h1>
           </div>
 
           <div>
-            <p>Iteracion</p>
+            <p>Iteración</p>
             <h1>{res ? res[1] : "Sin calculos"}</h1>
           </div>
 
           <div>
             <p>Converge</p>
-            <h1>{res ? (res[2] ? "Si" : "No") : "Sin calculos"}</h1>
+            <h1>{res ? (res[2] ? "Sí" : "No") : "Sin calculos"}</h1>
           </div>
         </Resultados>
 
@@ -196,9 +228,10 @@ const Biseccion = () => {
             id="graph"
             ref={graphContainer}
             style={{
-              backgroundColor: "#EDF2F7",
+              backgroundColor: "white",
               borderRadius: "5px",
               padding: "0.3rem",
+              border: "2px solid #e2e8f0",
             }}
           >
             Graph
