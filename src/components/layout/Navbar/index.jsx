@@ -29,8 +29,10 @@ const Navbar = ({ history }) => {
           <button onClick={() => history.push("/metodo/biseccion")}>
             Bisección
           </button>
-          <button>Newton</button>
-          <button>Secante</button>
+          <button onClick={() => history.push("/metodo/newton")}>Newton</button>
+          <button onClick={() => history.push("/metodo/secante")}>
+            Secante
+          </button>
         </LinksList>
       </StyledContainer>
     </Background>
