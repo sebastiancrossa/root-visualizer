@@ -2,6 +2,7 @@
 export const biseccion = (f, a, b, tol, iter_max) => {
   let fa = f(a);
   let fb = f(b);
+  let iterArr = [];
 
   if (fa * fb > 0) {
     console.error("error");
@@ -16,6 +17,8 @@ export const biseccion = (f, a, b, tol, iter_max) => {
   for (i; i < iter_max + 1; i++) {
     x = (a + b) / 2;
     let fx = f(x);
+
+    iterArr.push([i, x, fx, delta_x]);
 
     console.log(
       "i: ",
@@ -48,5 +51,5 @@ export const biseccion = (f, a, b, tol, iter_max) => {
   }
 
   let raiz = x;
-  return [raiz.toFixed(4), i, converge];
+  return [raiz.toFixed(4), i, converge, iterArr];
 };

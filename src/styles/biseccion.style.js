@@ -46,6 +46,7 @@ export const Resultados = styled.div`
   justify-content: space-evenly;
 
   padding: 2rem 0;
+  margin-bottom: 2rem;
 
   h1,
   p {
@@ -55,4 +56,19 @@ export const Resultados = styled.div`
   p {
     text-transform: uppercase;
   }
+`;
+
+export const IteracionesSection = styled.div`
+  max-width: 70%;
+  margin: 0 auto;
+
+  padding: 1rem;
+  border-radius: 5px;
+
+  background-color: #e2e8f0;
+`;
+
+export const Iteraciones = styled.ul`
+  list-style: none;
+  text-align: left;
 `;

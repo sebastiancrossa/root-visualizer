@@ -10,16 +10,18 @@ import {
   Inputs,
   InputsSection,
   Resultados,
+  IteracionesSection,
+  Iteraciones,
 } from "../styles/biseccion.style";
 
 const Biseccion = () => {
   const [res, setRes] = useState();
   const [formState, setFormState] = useState({
-    fn: "",
-    limite_inf: "",
-    limite_sup: "",
-    tol: "",
-    iter_max: "",
+    fn: "4 * x ** 3 + x + Math.cos(x) - 10",
+    limite_inf: "1.0",
+    limite_sup: "2.0",
+    tol: "10**-5",
+    iter_max: "100",
   });
 
   const calcularMetodo = () => {
@@ -132,7 +134,7 @@ const Biseccion = () => {
         <Resultados>
           <div>
             <p>Raiz</p>
-            <h1>{res ? res[0] : "Sin calculos"}</h1>
+            <h1>{res ? (res[2] ? res[0] : "No converge") : "Sin calculos"}</h1>
           </div>
 
           <div>
@@ -145,6 +147,20 @@ const Biseccion = () => {
             <h1>{res ? (res[2] ? "Si" : "No") : "Sin calculos"}</h1>
           </div>
         </Resultados>
+
+        <IteracionesSection>
+          <Iteraciones>
+            {res ? (
+              res[3].map((it) => (
+                <li>
+                  Iteración {it[0]}: x={it[1]} fx= {it[2]} dx= {it[3]}
+                </li>
+              ))
+            ) : (
+              <li>Sin calculos</li>
+            )}
+          </Iteraciones>
+        </IteracionesSection>
       </StyledContainer>
     </Layout>
   );
