@@ -11,8 +11,6 @@ const Home = () => {
     <Layout>
       <StyledContainer>
         <h1>Welcome to the Root Visualizer</h1>
-
-        <Graph />
       </StyledContainer>
     </Layout>
   );
