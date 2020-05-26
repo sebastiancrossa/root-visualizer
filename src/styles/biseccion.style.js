@@ -58,10 +58,16 @@ export const Resultados = styled.div`
   }
 `;
 
-export const IteracionesSection = styled.div`
+export const IteracionesGrid = styled.div`
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-gap: 1rem;
+
   max-width: 70%;
   margin: 0 auto;
+`;
 
+export const IteracionesSection = styled.div`
   padding: 1rem;
   border-radius: 5px;
 
@@ -71,4 +77,10 @@ export const IteracionesSection = styled.div`
 export const Iteraciones = styled.ul`
   list-style: none;
   text-align: left;
+
+  padding: 0;
+
+  li {
+    padding: 0;
+  }
 `;

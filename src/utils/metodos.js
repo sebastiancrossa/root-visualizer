@@ -13,8 +13,8 @@ export const biseccion = (f, a, b, tol, iter_max) => {
   let x = 0;
   let converge = false;
 
-  let i = 0;
-  for (i; i < iter_max + 1; i++) {
+  let i = 1;
+  for (i; i <= iter_max; i++) {
     x = (a + b) / 2;
     let fx = f(x);
 

@@ -1,6 +1,7 @@
 // Libraries
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { biseccion } from "../utils/metodos";
+import functionPlot from "function-plot";
 
 // Styles
 import Layout from "../components/layout";
@@ -10,14 +11,19 @@ import {
   Inputs,
   InputsSection,
   Resultados,
+  IteracionesGrid,
   IteracionesSection,
   Iteraciones,
 } from "../styles/biseccion.style";
 
+window.d3 = require("d3");
+
 const Biseccion = () => {
+  const graphContainer = useRef(null);
+
   const [res, setRes] = useState();
   const [formState, setFormState] = useState({
-    fn: "4 * x ** 3 + x + Math.cos(x) - 10",
+    fn: "4 * x ^ 3 + x - 10",
     limite_inf: "1.0",
     limite_sup: "2.0",
     tol: "10**-5",
@@ -49,6 +55,19 @@ const Biseccion = () => {
     setFormState({
       ...formState,
       [name]: value,
+    });
+  };
+
+  const showGraph = () => {
+    functionPlot({
+      target: graphContainer.current,
+      width: 480,
+      height: 400,
+      data: [
+        {
+          fn: formState ? formState.fn : "x^2",
+        },
+      ],
     });
   };
 
@@ -128,7 +147,14 @@ const Biseccion = () => {
             </div>
           </Inputs>
 
-          <button onClick={() => calcularMetodo()}>Calcular</button>
+          <button
+            onClick={() => {
+              calcularMetodo();
+              showGraph();
+            }}
+          >
+            Calcular
+          </button>
         </InputsSection>
 
         <Resultados>
@@ -148,19 +174,36 @@ const Biseccion = () => {
           </div>
         </Resultados>
 
-        <IteracionesSection>
-          <Iteraciones>
-            {res ? (
-              res[3].map((it) => (
-                <li>
-                  Iteración {it[0]}: x={it[1]} fx= {it[2]} dx= {it[3]}
-                </li>
-              ))
-            ) : (
-              <li>Sin calculos</li>
-            )}
-          </Iteraciones>
-        </IteracionesSection>
+        <IteracionesGrid>
+          <IteracionesSection>
+            <Iteraciones>
+              {res ? (
+                res[3].map((it) => (
+                  <li>
+                    <span style={{ fontWeight: "700" }}>
+                      Iteración {it[0]}:
+                    </span>{" "}
+                    x={it[1]} | fx= {it[2]} | dx= {it[3]}
+                  </li>
+                ))
+              ) : (
+                <li>Sin calculos</li>
+              )}
+            </Iteraciones>
+          </IteracionesSection>
+
+          <div
+            id="graph"
+            ref={graphContainer}
+            style={{
+              backgroundColor: "#EDF2F7",
+              borderRadius: "5px",
+              padding: "0.3rem",
+            }}
+          >
+            Graph
+          </div>
+        </IteracionesGrid>
       </StyledContainer>
     </Layout>
   );
