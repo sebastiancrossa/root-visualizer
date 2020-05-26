@@ -15,7 +15,10 @@ const Navbar = ({ history }) => {
       <StyledContainer>
         <div style={{ display: "inherit", alignItems: "center" }}>
           <FaSquareRootAlt size={25} style={{}} />
-          <button onClick={() => history.push("/")}>
+          <button
+            onClick={() => history.push("/")}
+            style={{ cursor: "pointer !important" }}
+          >
             <p>
               <span style={{ fontWeight: "700" }}>ROOT</span> Visualizer
             </p>
