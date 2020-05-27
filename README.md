@@ -1,4 +1,4 @@
-# Square Root Visualizer
+# Root Visualizer
 
 Proyecto final Métodos Numéricos
 

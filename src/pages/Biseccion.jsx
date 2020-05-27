@@ -1,5 +1,6 @@
 // Libraries
 import React, { useState, useRef } from "react";
+import { useToast } from "@chakra-ui/core";
 import { biseccion } from "../utils/metodos";
 import functionPlot from "function-plot";
 
@@ -21,6 +22,7 @@ window.d3 = require("d3");
 
 const Biseccion = () => {
   const graphContainer = useRef(null);
+  const toast = useToast();
 
   const [res, setRes] = useState();
   const [formState, setFormState] = useState({
@@ -33,22 +35,58 @@ const Biseccion = () => {
 
   const calcularMetodo = () => {
     const { fn, limite_inf, limite_sup, tol, iter_max } = formState;
+    let parsedFn = fn;
 
-    const func = new Function("x", `return ${fn}`);
+    try {
+      if (
+        isNaN(parseFloat(limite_inf)) ||
+        isNaN(parseFloat(limite_sup)) ||
+        isNaN(parseFloat(tol)) ||
+        isNaN(parseInt(iter_max))
+      ) {
+        throw new Error(
+          "Los valores introducidos no son puntos enteros o flotantes"
+        );
+      }
 
-    console.log(func);
+      if (fn.includes("^")) {
+        parsedFn = fn.split("^").join("**");
+      }
 
-    const resCalculo = biseccion(
-      func,
-      parseFloat(limite_inf),
-      parseFloat(limite_sup),
-      parseFloat(tol),
-      parseFloat(iter_max)
-    );
+      // eslint-disable-next-line
+      const func = new Function("x", `return ${parsedFn}`);
 
-    console.log(resCalculo);
-    setRes(resCalculo);
-    showGraph(resCalculo[0]);
+      const resCalculo = biseccion(
+        func,
+        parseFloat(limite_inf),
+        parseFloat(limite_sup),
+        parseFloat(tol),
+        parseFloat(iter_max)
+      );
+
+      console.log(resCalculo);
+      setRes(resCalculo);
+      showGraph(resCalculo[0]);
+    } catch (err) {
+      if (err.name === "SyntaxError") {
+        toast({
+          title: "Error",
+          description:
+            "Asegurate de no incluir letras alfabeticas y/o separar los números de las variables con un *",
+          status: "error",
+          duration: 4000,
+          isClosable: false,
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: `${err.message}`,
+          status: "error",
+          duration: 4000,
+          isClosable: false,
+        });
+      }
+    }
   };
 
   const handleInputChange = (e) => {
@@ -85,6 +123,14 @@ const Biseccion = () => {
           fn: parsedFn ? parsedFn : "x^2",
         },
         {
+          fn: `${formState.limite_inf} - x`,
+          fnType: "implicit",
+        },
+        {
+          fn: `${formState.limite_sup} - x`,
+          fnType: "implicit",
+        },
+        {
           points: [[x, 0]],
           fnType: "points",
           graphType: "scatter",
@@ -94,12 +140,10 @@ const Biseccion = () => {
         {
           x: formState.limite_inf,
           text: `x = ${formState.limite_inf}`,
-          color: "pink",
         },
         {
           x: formState.limite_sup,
           text: `x = ${formState.limite_sup}`,
-          color: "pink",
         },
       ],
     });
@@ -213,7 +257,7 @@ const Biseccion = () => {
             <Iteraciones>
               {res ? (
                 res[3].map((it) => (
-                  <li>
+                  <li key={it[0]}>
                     <span style={{ fontWeight: "700" }}>
                       Iteración {it[0]}:
                     </span>{" "}

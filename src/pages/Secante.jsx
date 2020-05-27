@@ -1,5 +1,6 @@
 // Libraries
 import React, { useState, useRef } from "react";
+import { useToast } from "@chakra-ui/core";
 import { secante } from "../utils/metodos";
 import functionPlot from "function-plot";
 
@@ -20,6 +21,7 @@ import {
 window.d3 = require("d3");
 
 const Secante = () => {
+  const toast = useToast();
   const graphContainer = useRef(null);
 
   const [res, setRes] = useState();
@@ -33,22 +35,57 @@ const Secante = () => {
 
   const calcularMetodo = () => {
     const { fn, limite_inf, limite_sup, tol, iter_max } = formState;
+    let parsedFn = fn;
 
-    // TODO: Parse functions that are called with a ^ symbol
-    // TODO Handle error e.g. 4x instead of 4 * x
-    const func = new Function("x", `return ${fn}`);
+    try {
+      if (
+        isNaN(parseFloat(limite_inf)) ||
+        isNaN(parseFloat(limite_sup)) ||
+        isNaN(parseFloat(tol)) ||
+        isNaN(parseInt(iter_max))
+      ) {
+        throw new Error(
+          "Los valores introducidos no son puntos enteros o flotantes"
+        );
+      }
 
-    const resCalculo = secante(
-      func,
-      parseFloat(limite_inf),
-      parseFloat(limite_sup),
-      parseFloat(tol),
-      parseFloat(iter_max)
-    );
+      if (fn.includes("^")) {
+        parsedFn = fn.split("^").join("**");
+      }
 
-    console.log(resCalculo);
-    setRes(resCalculo);
-    showGraph(resCalculo[0]);
+      // eslint-disable-next-line
+      const func = new Function("x", `return ${parsedFn}`);
+
+      const resCalculo = secante(
+        func,
+        parseFloat(limite_inf),
+        parseFloat(limite_sup),
+        parseFloat(tol),
+        parseFloat(iter_max)
+      );
+
+      setRes(resCalculo);
+      showGraph(resCalculo[0]);
+    } catch (err) {
+      if (err.name === "SyntaxError") {
+        toast({
+          title: "Error",
+          description:
+            "Asegurate de no incluir letras alfabeticas y/o separar los números de las variables con un *",
+          status: "error",
+          duration: 4000,
+          isClosable: false,
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: `${err.message}`,
+          status: "error",
+          duration: 4000,
+          isClosable: false,
+        });
+      }
+    }
   };
 
   const handleInputChange = (e) => {
