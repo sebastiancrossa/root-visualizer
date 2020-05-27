@@ -41,10 +41,19 @@ const Biseccion = () => {
         throw new Error("Utiliza ** para representar un exponente");
       }
 
+      if (
+        isNaN(parseFloat(limite_inf)) ||
+        isNaN(parseFloat(limite_sup)) ||
+        isNaN(parseFloat(tol)) ||
+        isNaN(parseInt(iter_max))
+      ) {
+        throw new Error(
+          "Los valores introducidos no son puntos enteros o flotantes"
+        );
+      }
+
       // eslint-disable-next-line
       const func = new Function("x", `return ${fn}`);
-
-      console.log(func);
 
       const resCalculo = biseccion(
         func,

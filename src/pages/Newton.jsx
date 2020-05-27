@@ -1,5 +1,6 @@
 // Libraries
 import React, { useState, useRef } from "react";
+import { useToast } from "@chakra-ui/core";
 import { newton } from "../utils/metodos";
 import functionPlot from "function-plot";
 
@@ -20,6 +21,7 @@ import {
 window.d3 = require("d3");
 
 const Newton = () => {
+  const toast = useToast();
   const graphContainer = useRef(null);
 
   const [res, setRes] = useState();
@@ -34,24 +36,57 @@ const Newton = () => {
   const calcularMetodo = () => {
     const { fn, df, x0, tol, iter_max } = formState;
 
-    // eslint-disable-next-line
-    const func = new Function("x", `return ${fn}`);
+    try {
+      if (fn.includes("^") || df.includes("^")) {
+        throw new Error("Utiliza ** para representar un exponente");
+      }
 
-    // eslint-disable-next-line
-    const dFunc = new Function("x", `return ${df}`);
-    console.log(func, dFunc);
+      if (
+        isNaN(parseFloat(x0)) ||
+        isNaN(parseFloat(tol)) ||
+        isNaN(parseInt(iter_max))
+      ) {
+        throw new Error(
+          "Los valores introducidos no son puntos enteros o flotantes"
+        );
+      }
 
-    const resCalculo = newton(
-      func,
-      dFunc,
-      parseFloat(x0),
-      parseFloat(tol),
-      parseFloat(iter_max)
-    );
+      // eslint-disable-next-line
+      const func = new Function("x", `return ${fn}`);
 
-    console.log(resCalculo);
-    setRes(resCalculo);
-    showGraph(resCalculo[0]);
+      // eslint-disable-next-line
+      const dFunc = new Function("x", `return ${df}`);
+
+      const resCalculo = newton(
+        func,
+        dFunc,
+        parseFloat(x0),
+        parseFloat(tol),
+        parseFloat(iter_max)
+      );
+
+      setRes(resCalculo);
+      showGraph(resCalculo[0]);
+    } catch (err) {
+      if (err.name === "SyntaxError") {
+        toast({
+          title: "Error",
+          description:
+            "Asegurate de no incluir letras alfabeticas y/o separar los números de las variables con un *",
+          status: "error",
+          duration: 4000,
+          isClosable: false,
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: `${err.message}`,
+          status: "error",
+          duration: 4000,
+          isClosable: false,
+        });
+      }
+    }
   };
 
   const handleInputChange = (e) => {
@@ -85,6 +120,10 @@ const Newton = () => {
           fn: parsedFn ? parsedFn : "x^2",
         },
         {
+          fn: `${formState.x0} - x`,
+          fnType: "implicit",
+        },
+        {
           points: [[x, 0]],
           fnType: "points",
           graphType: "scatter",
@@ -98,8 +137,6 @@ const Newton = () => {
       ],
     });
   };
-
-  console.log(formState);
 
   return (
     <Layout>

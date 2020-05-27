@@ -1,5 +1,6 @@
 // Libraries
 import React, { useState, useRef } from "react";
+import { useToast } from "@chakra-ui/core";
 import { secante } from "../utils/metodos";
 import functionPlot from "function-plot";
 
@@ -20,6 +21,7 @@ import {
 window.d3 = require("d3");
 
 const Secante = () => {
+  const toast = useToast();
   const graphContainer = useRef(null);
 
   const [res, setRes] = useState();
@@ -34,22 +36,57 @@ const Secante = () => {
   const calcularMetodo = () => {
     const { fn, limite_inf, limite_sup, tol, iter_max } = formState;
 
-    // TODO: Parse functions that are called with a ^ symbol
-    // TODO Handle error e.g. 4x instead of 4 * x
-    // eslint-disable-next-line
-    const func = new Function("x", `return ${fn}`);
+    try {
+      if (fn.includes("^")) {
+        throw new Error("Utiliza ** para representar un exponente");
+      }
 
-    const resCalculo = secante(
-      func,
-      parseFloat(limite_inf),
-      parseFloat(limite_sup),
-      parseFloat(tol),
-      parseFloat(iter_max)
-    );
+      if (
+        isNaN(parseFloat(limite_inf)) ||
+        isNaN(parseFloat(limite_sup)) ||
+        isNaN(parseFloat(tol)) ||
+        isNaN(parseInt(iter_max))
+      ) {
+        throw new Error(
+          "Los valores introducidos no son puntos enteros o flotantes"
+        );
+      }
 
-    console.log(resCalculo);
-    setRes(resCalculo);
-    showGraph(resCalculo[0]);
+      // TODO: Parse functions that are called with a ^ symbol
+      // TODO Handle error e.g. 4x instead of 4 * x
+      // eslint-disable-next-line
+      const func = new Function("x", `return ${fn}`);
+
+      const resCalculo = secante(
+        func,
+        parseFloat(limite_inf),
+        parseFloat(limite_sup),
+        parseFloat(tol),
+        parseFloat(iter_max)
+      );
+
+      setRes(resCalculo);
+      showGraph(resCalculo[0]);
+    } catch (err) {
+      if (err.name === "SyntaxError") {
+        toast({
+          title: "Error",
+          description:
+            "Asegurate de no incluir letras alfabeticas y/o separar los números de las variables con un *",
+          status: "error",
+          duration: 4000,
+          isClosable: false,
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: `${err.message}`,
+          status: "error",
+          duration: 4000,
+          isClosable: false,
+        });
+      }
+    }
   };
 
   const handleInputChange = (e) => {
