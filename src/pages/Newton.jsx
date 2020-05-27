@@ -48,15 +48,20 @@ const Newton = () => {
     x0: "1",
     tol: "0.001",
     iter_max: "100",
+    msIter: "800",
   });
 
   const calcularMetodo = () => {
-    const { fn, df, x0, tol, iter_max } = formState;
+    const { fn, df, x0, tol, iter_max, msIter } = formState;
     let parsedFn = fn;
     let parsedDf = df;
 
     try {
-      if (isNaN(Number(x0)) || isNaN(Number(tol)) || isNaN(Number(iter_max))) {
+      if (
+        isNaN(Number(x0)) ||
+        isNaN(Number(tol)) ||
+        isNaN(Number(iter_max) || isNaN(Number(msIter)))
+      ) {
         throw new Error(
           "Los valores introducidos no son puntos enteros o flotantes"
         );
@@ -91,7 +96,7 @@ const Newton = () => {
             setIterationList((prevState) => [...prevState, resCalculo[3][i]]);
 
             showGraph(it[1]);
-          }, i * 800);
+          }, i * (msIter !== "" ? parseFloat(msIter) : 800));
         });
 
       setRes(resCalculo);
@@ -191,7 +196,7 @@ const Newton = () => {
           <div>
             <h1>Pros</h1>
 
-            <List spacing={3} style={{ textAlign: "left" }}>
+            <List spacing={3} style={{ textAlign: "left", maxWidth: "25rem" }}>
               {descInfo.pros.map((it) => (
                 <ListItem>
                   <ListIcon icon="check-circle" color="green.400" />
@@ -204,7 +209,7 @@ const Newton = () => {
           <div>
             <h1>Contras</h1>
 
-            <List spacing={3} style={{ textAlign: "left" }}>
+            <List spacing={3} style={{ textAlign: "left", maxWidth: "25rem" }}>
               {descInfo.cons.map((it) => (
                 <ListItem>
                   <ListIcon icon="warning" color="red.400" />
@@ -276,6 +281,19 @@ const Newton = () => {
               />{" "}
               <br />
             </div>
+
+            <div style={{ gridArea: "inp5" }}>
+              <label htmlFor="msIter">Milisegundos por iteración: </label>{" "}
+              <br />
+              <Input
+                type="text"
+                id="msIter"
+                name="msIter"
+                value={formState.msIter}
+                onChange={(e) => handleInputChange(e)}
+              />{" "}
+              <br />
+            </div>
           </Inputs>
 
           <Button
@@ -296,17 +314,17 @@ const Newton = () => {
         <Resultados>
           <div>
             <p>Raíz</p>
-            <h1>{res ? (res[2] ? res[0] : "No converge") : "Sin calculos"}</h1>
+            <h1>{res ? (res[2] ? res[0] : "No converge") : "Sin cálculos"}</h1>
           </div>
 
           <div>
             <p>Iteración</p>
-            <h1>{res ? res[1] : "Sin calculos"}</h1>
+            <h1>{res ? res[1] : "Sin cálculos"}</h1>
           </div>
 
           <div>
             <p>Converge</p>
-            <h1>{res ? (res[2] ? "Sí" : "No") : "Sin calculos"}</h1>
+            <h1>{res ? (res[2] ? "Sí" : "No") : "Sin cálculos"}</h1>
           </div>
         </Resultados>
 
