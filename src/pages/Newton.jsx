@@ -35,7 +35,8 @@ const Newton = () => {
     cons: [
       "Convergencia lenta",
       "Tiene que calcular y utilizar la derivada de la función dada",
-      "Depende de un valor x inicial donde df(x) no debe ser igual a 0",
+      "Existen situaciones en las que no se alcanza la convergencia, por lo que se debe indicar un número máximo de iteraciónes",
+      "Puede darse el caso en el que regrese una falsa raíz, por lo quese debe indicar una tolerancia también",
     ],
   });
 
@@ -177,7 +178,7 @@ const Newton = () => {
     <Layout>
       <StyledContainer>
         <Heading>
-          <h1>Método de Newton</h1>
+          <h1>Método de Newton-Raphson</h1>
           <p>
             "A partir de una aproximación inicial, se evalúa en la función y se
             traza una recta tangente, cuya intersección con el eje x produce una

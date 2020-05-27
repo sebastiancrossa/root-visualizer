@@ -1,6 +1,6 @@
 // Libraries
 import React, { useState, useRef } from "react";
-import { useToast, Tooltip } from "@chakra-ui/core";
+import { useToast, Tooltip, List, ListItem, ListIcon } from "@chakra-ui/core";
 import { secante } from "../utils/metodos";
 import functionPlot from "function-plot";
 
@@ -10,6 +10,7 @@ import { Button, Input } from "../style";
 import {
   StyledContainer,
   Heading,
+  Description,
   InputsSection,
   Inputs,
   Resultados,
@@ -24,6 +25,19 @@ window.d3 = require("d3");
 const Secante = () => {
   const toast = useToast();
   const graphContainer = useRef(null);
+
+  const [descInfo] = useState({
+    pros: [
+      "Método rápido",
+      "Basado en el método Newton-Raphson, pero sin la necesidad de calcular la derivada de la función",
+      "Se puede aplicar cuando la f(x) es muy compleja como para calcular su derivada",
+    ],
+    cons: [
+      "Velocidad y convergencia no más rápido que los de Newton-Raphson",
+      "Se le debe pasar dos puntos a & b, donde f(a) - f(b) no deben ser zero",
+      "No asegura cuando al raíz es multiple",
+    ],
+  });
 
   const [res, setRes] = useState();
   const [iterationList, setIterationList] = useState([]);
@@ -165,6 +179,34 @@ const Secante = () => {
             que en los dos valores iniciales no tiene que existir una raíz"
           </p>
         </Heading>
+
+        <Description>
+          <div>
+            <h1>Pros</h1>
+
+            <List spacing={3} style={{ textAlign: "left" }}>
+              {descInfo.pros.map((it) => (
+                <ListItem>
+                  <ListIcon icon="check-circle" color="green.400" />
+                  {it}
+                </ListItem>
+              ))}
+            </List>
+          </div>
+
+          <div>
+            <h1>Contras</h1>
+
+            <List spacing={3} style={{ textAlign: "left" }}>
+              {descInfo.cons.map((it) => (
+                <ListItem>
+                  <ListIcon icon="warning" color="red.400" />
+                  {it}
+                </ListItem>
+              ))}
+            </List>
+          </div>
+        </Description>
 
         <InputsSection>
           <Inputs>
