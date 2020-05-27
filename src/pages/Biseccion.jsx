@@ -181,8 +181,7 @@ const Biseccion = () => {
     formState.limite_inf === "" ||
     formState.limite_sup === "" ||
     formState.tol === "" ||
-    formState.iter_max === "" ||
-    formState.msIter === "";
+    formState.iter_max === "";
 
   return (
     <Layout>

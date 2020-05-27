@@ -47,10 +47,11 @@ const Secante = () => {
     limite_sup: "3.0",
     tol: "0.001",
     iter_max: "100",
+    msIter: "800",
   });
 
   const calcularMetodo = () => {
-    const { fn, limite_inf, limite_sup, tol, iter_max } = formState;
+    const { fn, limite_inf, limite_sup, tol, iter_max, msIter } = formState;
     let parsedFn = fn;
 
     try {
@@ -58,7 +59,8 @@ const Secante = () => {
         isNaN(Number(limite_inf)) ||
         isNaN(Number(limite_sup)) ||
         isNaN(Number(tol)) ||
-        isNaN(Number(iter_max))
+        isNaN(Number(iter_max)) ||
+        isNaN(Number(msIter))
       ) {
         throw new Error(
           "Los valores introducidos no son puntos enteros o flotantes"
@@ -83,13 +85,11 @@ const Secante = () => {
       resCalculo &&
         resCalculo[3].map((it, i) => {
           setTimeout(() => {
-            //console.log(it);
             setRes([it[1], it[0], true, resCalculo[3]]);
             setIterationList((prevState) => [...prevState, resCalculo[3][i]]);
-            //console.log(res);
 
             showGraph(it[1]);
-          }, i * 800);
+          }, i * (msIter ? parseFloat(msIter) : 800));
         });
 
       setRes(resCalculo);
@@ -296,6 +296,19 @@ const Secante = () => {
               />{" "}
               <br />
             </div>
+
+            <div style={{ gridArea: "inp5" }}>
+              <label htmlFor="msIter">Milisegundos por iteración: </label>{" "}
+              <br />
+              <Input
+                type="text"
+                id="msIter"
+                name="msIter"
+                value={formState.msIter}
+                onChange={(e) => handleInputChange(e)}
+              />{" "}
+              <br />
+            </div>
           </Inputs>
 
           <Button
@@ -316,17 +329,17 @@ const Secante = () => {
         <Resultados>
           <div>
             <p>Raíz</p>
-            <h1>{res ? (res[2] ? res[0] : "No converge") : "Sin calculos"}</h1>
+            <h1>{res ? (res[2] ? res[0] : "No converge") : "Sin cálculos"}</h1>
           </div>
 
           <div>
             <p>Iteración</p>
-            <h1>{res ? res[1] : "Sin calculos"}</h1>
+            <h1>{res ? res[1] : "Sin cálculos"}</h1>
           </div>
 
           <div>
             <p>Converge</p>
-            <h1>{res ? (res[2] ? "Sí" : "No") : "Sin calculos"}</h1>
+            <h1>{res ? (res[2] ? "Sí" : "No") : "Sin cálculos"}</h1>
           </div>
         </Resultados>
 
