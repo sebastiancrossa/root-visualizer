@@ -47,10 +47,11 @@ const Biseccion = () => {
     limite_sup: "100.0",
     tol: "0.001",
     iter_max: "100",
+    msIter: "800",
   });
 
   const calcularMetodo = () => {
-    const { fn, limite_inf, limite_sup, tol, iter_max } = formState;
+    const { fn, limite_inf, limite_sup, tol, iter_max, msIter } = formState;
     let parsedFn = fn;
 
     try {
@@ -58,7 +59,8 @@ const Biseccion = () => {
         isNaN(Number(limite_inf)) ||
         isNaN(Number(limite_sup)) ||
         isNaN(Number(tol)) ||
-        isNaN(Number(iter_max))
+        isNaN(Number(iter_max)) ||
+        isNaN(Number(msIter))
       ) {
         throw new Error(
           "Los valores introducidos no son puntos enteros o flotantes"
@@ -83,13 +85,11 @@ const Biseccion = () => {
       resCalculo &&
         resCalculo[3].map((it, i) => {
           setTimeout(() => {
-            //console.log(it);
             setRes([it[1], it[0], true, resCalculo[3]]);
             setIterationList((prevState) => [...prevState, resCalculo[3][i]]);
-            //console.log(res);
 
             showGraph(it[1]);
-          }, i * 800);
+          }, i * (msIter !== "" ? parseFloat(msIter) : 800));
         });
 
       setRes(resCalculo);
@@ -181,7 +181,8 @@ const Biseccion = () => {
     formState.limite_inf === "" ||
     formState.limite_sup === "" ||
     formState.tol === "" ||
-    formState.iter_max === "";
+    formState.iter_max === "" ||
+    formState.msIter === "";
 
   return (
     <Layout>
@@ -285,6 +286,19 @@ const Biseccion = () => {
               />{" "}
               <br />
             </div>
+
+            <div style={{ gridArea: "inp5" }}>
+              <label htmlFor="msIter">Milisegundos por iteración: </label>{" "}
+              <br />
+              <Input
+                type="text"
+                id="msIter"
+                name="msIter"
+                value={formState.msIter}
+                onChange={(e) => handleInputChange(e)}
+              />{" "}
+              <br />
+            </div>
           </Inputs>
 
           <Button
@@ -381,9 +395,7 @@ const Biseccion = () => {
               padding: "0.3rem",
               border: "2px solid #e2e8f0",
             }}
-          >
-            Graph
-          </div>
+          ></div>
         </IteracionesGrid>
       </StyledContainer>
     </Layout>
