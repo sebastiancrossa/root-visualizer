@@ -1,6 +1,6 @@
 // Libraries
 import React, { useState, useRef } from "react";
-import { useToast } from "@chakra-ui/core";
+import { useToast, Tooltip, List, ListItem, ListIcon } from "@chakra-ui/core";
 import { biseccion } from "../utils/metodos";
 import functionPlot from "function-plot";
 
@@ -10,11 +10,13 @@ import { Button, Input } from "../style";
 import {
   StyledContainer,
   Heading,
+  Description,
   Inputs,
   InputsSection,
   Resultados,
   IteracionesGrid,
   IteracionesSection,
+  Appendice,
   Iteraciones,
 } from "../styles/biseccion.style";
 
@@ -23,6 +25,19 @@ window.d3 = require("d3");
 const Biseccion = () => {
   const graphContainer = useRef(null);
   const toast = useToast();
+
+  const [descInfo] = useState({
+    pros: [
+      "Siempre converge",
+      "Es útil como aproximación inicial de otros métodos",
+      "No necesita de la derivada de la función para los cálculos",
+    ],
+    cons: [
+      "Converge de manera lenta",
+      "Depende de un intervalo [a, b]",
+      "Debe existir un cambio de signo dentro del intervalo",
+    ],
+  });
 
   const [res, setRes] = useState();
   const [iterationList, setIterationList] = useState([]);
@@ -174,6 +189,34 @@ const Biseccion = () => {
           </p>
         </Heading>
 
+        <Description>
+          <div>
+            <h1>Pros</h1>
+
+            <List spacing={3} style={{ textAlign: "left" }}>
+              {descInfo.pros.map((it) => (
+                <ListItem>
+                  <ListIcon icon="check-circle" color="green.400" />
+                  {it}
+                </ListItem>
+              ))}
+            </List>
+          </div>
+
+          <div>
+            <h1>Contras</h1>
+
+            <List spacing={3} style={{ textAlign: "left" }}>
+              {descInfo.cons.map((it) => (
+                <ListItem>
+                  <ListIcon icon="warning" color="red.400" />
+                  {it}
+                </ListItem>
+              ))}
+            </List>
+          </div>
+        </Description>
+
         <InputsSection>
           <Inputs>
             <div style={{ gridArea: "func" }}>
@@ -253,6 +296,9 @@ const Biseccion = () => {
               formState.iter_max === ""
             }
             onClick={() => {
+              // Reset iteration list
+              setIterationList([]);
+
               calcularMetodo();
             }}
             style={{ gridArea: "calc" }}
@@ -264,37 +310,72 @@ const Biseccion = () => {
         <Resultados>
           <div>
             <p>Raíz</p>
-            <h1>{res ? (res[2] ? res[0] : "No converge") : "Sin calculos"}</h1>
+            <h1>{res ? (res[2] ? res[0] : "No converge") : "Sin cálculos"}</h1>
           </div>
 
           <div>
             <p>Iteración</p>
-            <h1>{res ? res[1] : "Sin calculos"}</h1>
+            <h1>{res ? res[1] : "Sin cálculos"}</h1>
           </div>
 
           <div>
             <p>Converge</p>
-            <h1>{res ? (res[2] ? "Sí" : "No") : "Sin calculos"}</h1>
+            <h1>{res ? (res[2] ? "Sí" : "No") : "Sin cálculos"}</h1>
           </div>
         </Resultados>
 
         <IteracionesGrid>
-          <IteracionesSection>
-            <Iteraciones>
-              {iterationList ? (
-                iterationList.map((it, i) => (
-                  <li key={it[0]}>
-                    <span style={{ fontWeight: "700" }}>
-                      Iteración {it[0]}:
-                    </span>{" "}
-                    x={it[1]} | fx= {it[2]} | dx= {it[3]}
-                  </li>
-                ))
-              ) : (
-                <li>Sin calculos</li>
-              )}
-            </Iteraciones>
-          </IteracionesSection>
+          <div>
+            <Appendice>
+              <p>
+                ¿Qué significa cada valor?{" "}
+                <span style={{ fontStyle: "italic" }}>(hover)</span>
+              </p>
+
+              <div>
+                <Tooltip
+                  hasArrow
+                  label="Aproximación a la raiz (Limite superior menos el inferior entre 2)"
+                  placement="top"
+                >
+                  <p>x</p>
+                </Tooltip>
+
+                <Tooltip
+                  hasArrow
+                  label=" La funcion original evaluada con el valor de x"
+                  placement="top"
+                >
+                  <p>fx</p>
+                </Tooltip>
+
+                <Tooltip
+                  hasArrow
+                  label="El cambio o la diferencia entre el valor aproximado (x) a los limites"
+                  placement="top"
+                >
+                  <p>dx</p>
+                </Tooltip>
+              </div>
+            </Appendice>
+
+            <IteracionesSection>
+              <Iteraciones>
+                {iterationList ? (
+                  iterationList.map((it, i) => (
+                    <li key={it[0]}>
+                      <span style={{ fontWeight: "700" }}>
+                        Iteración {it[0]}:
+                      </span>{" "}
+                      x={it[1]} | fx= {it[2]} | dx= {it[3]}
+                    </li>
+                  ))
+                ) : (
+                  <li>Sin cálculos</li>
+                )}
+              </Iteraciones>
+            </IteracionesSection>
+          </div>
 
           <div
             id="graph"
