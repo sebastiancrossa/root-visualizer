@@ -15,6 +15,17 @@ export const Button = styled.button`
   padding: 0.5rem 4rem;
   background-color: black;
   color: white;
+
+  &:disabled {
+    cursor: inherit;
+
+    color: black;
+    background-color: white;
+
+    -webkit-box-shadow: inset 0px 0px 0px 2px black;
+    -moz-box-shadow: inset 0px 0px 0px 2px black;
+    box-shadow: inset 0px 0px 0px 2px black;
+  }
 `;
 
 export const Input = styled.input`
