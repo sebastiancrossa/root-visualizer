@@ -1,4 +1,6 @@
 // TODO: Documentar los metodos
+// TODO: Regresar los errores y desplegarselos a los usuarios
+
 export const biseccion = (f, a, b, tol, iter_max) => {
   let fa = f(a);
   let fb = f(b);
@@ -104,6 +106,76 @@ export const newton = (f, df, x0, tol, iter_max) => {
       converge = true;
       break;
     }
+  }
+
+  if (converge == false) {
+    console.log("El metodo no converge");
+  }
+
+  let raiz = x;
+  return [raiz.toFixed(4), i, converge, iterArr];
+};
+
+export const secante = (f, a, b, tol, iter_max) => {
+  let fa = f(a);
+  let fb = f(b);
+  let iterArr = [];
+
+  if (fb - fa == 0) {
+    console.error("ERROR: f(b) - f(a) debe ser diferente de 0");
+  }
+
+  if (b - a == 0) {
+    console.error("ERROR: b - a debe ser diferente de 0");
+  }
+
+  if (Math.abs(fa) < Math.abs(fb)) {
+    // flip vals
+    let tmp_a, tmp_fa;
+    tmp_a = a;
+    tmp_fa = fa;
+
+    a = b;
+    b = tmp_a;
+
+    fa = fb;
+    fb = tmp_fa;
+  }
+
+  let x = b;
+  let fx = fb;
+
+  let converge = false;
+
+  let i = 0;
+  for (i; i < iter_max + 1; i++) {
+    let delta_x = (-fx / (fb - fa)) * (b - a);
+    x += delta_x;
+    fx = f(x);
+
+    iterArr.push([i, x.toFixed(4), fx.toFixed(4), delta_x.toFixed(4)]);
+
+    console.log(
+      "i: ",
+      i,
+      "x: ",
+      x.toFixed(4),
+      "fx: ",
+      fx.toFixed(4),
+      "dx: ",
+      delta_x.toFixed(4)
+    );
+
+    if (Math.abs(delta_x) <= tol && Math.abs(fx) <= tol) {
+      converge = true;
+      break;
+    }
+
+    a = b;
+    b = x;
+
+    fa = fb;
+    fb = fx;
   }
 
   if (converge == false) {
