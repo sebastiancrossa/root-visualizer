@@ -78,7 +78,7 @@ const Secante = () => {
       width: 480,
       height: 400,
       xAxis: {
-        domain: [formState.limite_inf - 10, formState.limite_sup + 10],
+        domain: [formState.limite_inf - 0.5, formState.limite_sup + 1],
       },
       data: [
         {
@@ -94,12 +94,10 @@ const Secante = () => {
         {
           x: formState.limite_inf,
           text: `x = ${formState.limite_inf}`,
-          color: "pink",
         },
         {
           x: formState.limite_sup,
           text: `x = ${formState.limite_sup}`,
-          color: "pink",
         },
       ],
     });
@@ -132,7 +130,7 @@ const Secante = () => {
             </div>
 
             <div style={{ gridArea: "inp1" }}>
-              <label htmlFor="limite_inf">Limite inferior: </label> <br />
+              <label htmlFor="limite_inf">Valor "x" primario: </label> <br />
               <Input
                 type="text"
                 id="limite_inf"
@@ -144,7 +142,7 @@ const Secante = () => {
             </div>
 
             <div style={{ gridArea: "inp2" }}>
-              <label htmlFor="limite_sup">Limite superior: </label> <br />
+              <label htmlFor="limite_sup">Valor "x" secundario: </label> <br />
               <Input
                 type="text"
                 id="limite_sup"
