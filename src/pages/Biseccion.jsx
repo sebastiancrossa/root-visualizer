@@ -64,7 +64,6 @@ const Biseccion = () => {
         parseFloat(iter_max)
       );
 
-      console.log(resCalculo);
       setRes(resCalculo);
       showGraph(resCalculo[0]);
     } catch (err) {
@@ -226,6 +225,20 @@ const Biseccion = () => {
           </Inputs>
 
           <Button
+            disabled={
+              formState.fn === "" ||
+              formState.limite_inf === "" ||
+              formState.limite_sup === "" ||
+              formState.tol === "" ||
+              formState.iter_max === ""
+            }
+            aria-busy={
+              formState.fn === "" ||
+              formState.limite_inf === "" ||
+              formState.limite_sup === "" ||
+              formState.tol === "" ||
+              formState.iter_max === ""
+            }
             onClick={() => {
               calcularMetodo();
             }}

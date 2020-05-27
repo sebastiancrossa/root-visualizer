@@ -216,6 +216,20 @@ const Secante = () => {
           </Inputs>
 
           <Button
+            disabled={
+              formState.fn === "" ||
+              formState.limite_inf === "" ||
+              formState.limite_sup === "" ||
+              formState.tol === "" ||
+              formState.iter_max === ""
+            }
+            aria-busy={
+              formState.fn === "" ||
+              formState.limite_inf === "" ||
+              formState.limite_sup === "" ||
+              formState.tol === "" ||
+              formState.iter_max === ""
+            }
             onClick={() => {
               calcularMetodo();
             }}
@@ -247,7 +261,7 @@ const Secante = () => {
             <Iteraciones>
               {res ? (
                 res[3].map((it) => (
-                  <li>
+                  <li key={it[0]}>
                     <span style={{ fontWeight: "700" }}>
                       Iteración {it[0]}:
                     </span>{" "}

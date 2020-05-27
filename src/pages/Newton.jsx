@@ -217,6 +217,20 @@ const Newton = () => {
           </Inputs>
 
           <Button
+            disabled={
+              formState.fn === "" ||
+              formState.df === "" ||
+              formState.x0 === "" ||
+              formState.tol === "" ||
+              formState.iter_max === ""
+            }
+            aria-busy={
+              formState.fn === "" ||
+              formState.df === "" ||
+              formState.x0 === "" ||
+              formState.tol === "" ||
+              formState.iter_max === ""
+            }
             onClick={() => {
               calcularMetodo();
             }}
@@ -248,7 +262,7 @@ const Newton = () => {
             <Iteraciones>
               {res ? (
                 res[3].map((it) => (
-                  <li>
+                  <li key={it[0]}>
                     <span style={{ fontWeight: "700" }}>
                       Iteración {it[0]}:
                     </span>{" "}
