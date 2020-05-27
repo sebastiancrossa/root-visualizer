@@ -127,6 +127,11 @@ const Secante = () => {
 
   const showGraph = (x) => {
     let parsedFn = formState.fn;
+    let domainArr = [
+      parseFloat(formState.limite_inf),
+      parseFloat(formState.limite_sup),
+    ];
+    let sortedArr = domainArr.sort((a, b) => a - b);
 
     // Parses our function so it makes sure that it uses ^ to represent an exponent
     // This is needed since the graph library doesn't accept **
@@ -143,7 +148,7 @@ const Secante = () => {
       width: 410,
       height: 400,
       xAxis: {
-        domain: [formState.limite_inf - 0.5, formState.limite_sup + 1],
+        domain: sortedArr,
       },
       data: [
         {
