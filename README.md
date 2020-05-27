@@ -6,4 +6,3 @@ Proyecto final Métodos Numéricos
 
 - Refactor and abstract repetitive code / styling.
 - Have the graph show every individual iteration.
-- Display errors to the user with a toast
