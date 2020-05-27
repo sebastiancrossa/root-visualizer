@@ -176,6 +176,13 @@ const Biseccion = () => {
     });
   };
 
+  const isDisabled =
+    formState.fn === "" ||
+    formState.limite_inf === "" ||
+    formState.limite_sup === "" ||
+    formState.tol === "" ||
+    formState.iter_max === "";
+
   return (
     <Layout>
       <StyledContainer>
@@ -193,7 +200,7 @@ const Biseccion = () => {
           <div>
             <h1>Pros</h1>
 
-            <List spacing={3} style={{ textAlign: "left" }}>
+            <List spacing={3} style={{ textAlign: "left", maxWidth: "25rem" }}>
               {descInfo.pros.map((it) => (
                 <ListItem>
                   <ListIcon icon="check-circle" color="green.400" />
@@ -206,7 +213,7 @@ const Biseccion = () => {
           <div>
             <h1>Contras</h1>
 
-            <List spacing={3} style={{ textAlign: "left" }}>
+            <List spacing={3} style={{ textAlign: "left", maxWidth: "25rem" }}>
               {descInfo.cons.map((it) => (
                 <ListItem>
                   <ListIcon icon="warning" color="red.400" />
@@ -281,20 +288,8 @@ const Biseccion = () => {
           </Inputs>
 
           <Button
-            disabled={
-              formState.fn === "" ||
-              formState.limite_inf === "" ||
-              formState.limite_sup === "" ||
-              formState.tol === "" ||
-              formState.iter_max === ""
-            }
-            aria-busy={
-              formState.fn === "" ||
-              formState.limite_inf === "" ||
-              formState.limite_sup === "" ||
-              formState.tol === "" ||
-              formState.iter_max === ""
-            }
+            disabled={isDisabled}
+            aria-busy={isDisabled}
             onClick={() => {
               // Reset iteration list
               setIterationList([]);

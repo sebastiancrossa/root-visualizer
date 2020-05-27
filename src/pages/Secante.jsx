@@ -140,7 +140,7 @@ const Secante = () => {
         xLine: true, // dashed line parallel to y = 0
         yLine: true,
       },
-      width: 480,
+      width: 410,
       height: 400,
       xAxis: {
         domain: [formState.limite_inf - 0.5, formState.limite_sup + 1],
@@ -148,6 +148,14 @@ const Secante = () => {
       data: [
         {
           fn: parsedFn ? parsedFn : "x^2",
+        },
+        {
+          fn: `${formState.limite_inf} - x`,
+          fnType: "implicit",
+        },
+        {
+          fn: `${formState.limite_sup} - x`,
+          fnType: "implicit",
         },
         {
           points: [[x, 0]],
@@ -168,6 +176,13 @@ const Secante = () => {
     });
   };
 
+  const isDisabled =
+    formState.fn === "" ||
+    formState.limite_inf === "" ||
+    formState.limite_sup === "" ||
+    formState.tol === "" ||
+    formState.iter_max === "";
+
   return (
     <Layout>
       <StyledContainer>
@@ -184,7 +199,13 @@ const Secante = () => {
           <div>
             <h1>Pros</h1>
 
-            <List spacing={3} style={{ textAlign: "left" }}>
+            <List
+              spacing={3}
+              style={{
+                textAlign: "left",
+                maxWidth: "25rem",
+              }}
+            >
               {descInfo.pros.map((it) => (
                 <ListItem>
                   <ListIcon icon="check-circle" color="green.400" />
@@ -197,7 +218,13 @@ const Secante = () => {
           <div>
             <h1>Contras</h1>
 
-            <List spacing={3} style={{ textAlign: "left" }}>
+            <List
+              spacing={3}
+              style={{
+                textAlign: "left",
+                maxWidth: "25rem",
+              }}
+            >
               {descInfo.cons.map((it) => (
                 <ListItem>
                   <ListIcon icon="warning" color="red.400" />
@@ -272,20 +299,8 @@ const Secante = () => {
           </Inputs>
 
           <Button
-            disabled={
-              formState.fn === "" ||
-              formState.limite_inf === "" ||
-              formState.limite_sup === "" ||
-              formState.tol === "" ||
-              formState.iter_max === ""
-            }
-            aria-busy={
-              formState.fn === "" ||
-              formState.limite_inf === "" ||
-              formState.limite_sup === "" ||
-              formState.tol === "" ||
-              formState.iter_max === ""
-            }
+            disabled={isDisabled}
+            aria-busy={isDisabled}
             onClick={() => {
               // Reset iteration list
               setIterationList([]);
@@ -377,9 +392,7 @@ const Secante = () => {
               padding: "0.3rem",
               border: "2px solid #e2e8f0",
             }}
-          >
-            Graph
-          </div>
+          ></div>
         </IteracionesGrid>
       </StyledContainer>
     </Layout>

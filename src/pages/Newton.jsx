@@ -191,7 +191,7 @@ const Newton = () => {
           <div>
             <h1>Pros</h1>
 
-            <List spacing={3} style={{ textAlign: "left" }}>
+            <List spacing={3} style={{ textAlign: "left", maxWidth: "25rem" }}>
               {descInfo.pros.map((it) => (
                 <ListItem>
                   <ListIcon icon="check-circle" color="green.400" />
@@ -204,7 +204,7 @@ const Newton = () => {
           <div>
             <h1>Contras</h1>
 
-            <List spacing={3} style={{ textAlign: "left" }}>
+            <List spacing={3} style={{ textAlign: "left", maxWidth: "25rem" }}>
               {descInfo.cons.map((it) => (
                 <ListItem>
                   <ListIcon icon="warning" color="red.400" />
