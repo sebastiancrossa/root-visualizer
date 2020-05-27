@@ -3,7 +3,6 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 
 // Styles
-import { Container } from "../../../style";
 import { StyledContainer, Background, LinksList } from "./navbar.style";
 
 // Component Imports

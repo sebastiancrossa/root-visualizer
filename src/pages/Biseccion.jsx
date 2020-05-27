@@ -34,6 +34,7 @@ const Biseccion = () => {
   const calcularMetodo = () => {
     const { fn, limite_inf, limite_sup, tol, iter_max } = formState;
 
+    // eslint-disable-next-line
     const func = new Function("x", `return ${fn}`);
 
     console.log(func);
@@ -85,6 +86,14 @@ const Biseccion = () => {
           fn: parsedFn ? parsedFn : "x^2",
         },
         {
+          fn: `${formState.limite_inf} - x`,
+          fnType: "implicit",
+        },
+        {
+          fn: `${formState.limite_sup} - x`,
+          fnType: "implicit",
+        },
+        {
           points: [[x, 0]],
           fnType: "points",
           graphType: "scatter",
@@ -94,12 +103,10 @@ const Biseccion = () => {
         {
           x: formState.limite_inf,
           text: `x = ${formState.limite_inf}`,
-          color: "pink",
         },
         {
           x: formState.limite_sup,
           text: `x = ${formState.limite_sup}`,
-          color: "pink",
         },
       ],
     });

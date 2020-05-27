@@ -48,10 +48,6 @@ export const biseccion = (f, a, b, tol, iter_max) => {
     delta_x = delta_x / 2;
   }
 
-  if (converge == false) {
-    console.log("El metodo no converge");
-  }
-
   let raiz = x;
   return [raiz.toFixed(4), i, converge, iterArr];
 };
@@ -102,13 +98,13 @@ export const newton = (f, df, x0, tol, iter_max) => {
       delta_x.toFixed(4)
     );
 
-    if ((Math.abs(delta_x) <= tol && Math.abs(fx) <= tol) || dfx == 0) {
+    if ((Math.abs(delta_x) <= tol && Math.abs(fx) <= tol) || dfx === 0) {
       converge = true;
       break;
     }
   }
 
-  if (converge == false) {
+  if (converge === false) {
     console.log("El metodo no converge");
   }
 
@@ -121,11 +117,11 @@ export const secante = (f, a, b, tol, iter_max) => {
   let fb = f(b);
   let iterArr = [];
 
-  if (fb - fa == 0) {
+  if (fb - fa === 0) {
     console.error("ERROR: f(b) - f(a) debe ser diferente de 0");
   }
 
-  if (b - a == 0) {
+  if (b - a === 0) {
     console.error("ERROR: b - a debe ser diferente de 0");
   }
 
@@ -178,7 +174,7 @@ export const secante = (f, a, b, tol, iter_max) => {
     fb = fx;
   }
 
-  if (converge == false) {
+  if (converge === false) {
     console.log("El metodo no converge");
   }
 

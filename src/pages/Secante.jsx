@@ -36,6 +36,7 @@ const Secante = () => {
 
     // TODO: Parse functions that are called with a ^ symbol
     // TODO Handle error e.g. 4x instead of 4 * x
+    // eslint-disable-next-line
     const func = new Function("x", `return ${fn}`);
 
     const resCalculo = secante(

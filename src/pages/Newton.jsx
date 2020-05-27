@@ -34,7 +34,10 @@ const Newton = () => {
   const calcularMetodo = () => {
     const { fn, df, x0, tol, iter_max } = formState;
 
+    // eslint-disable-next-line
     const func = new Function("x", `return ${fn}`);
+
+    // eslint-disable-next-line
     const dFunc = new Function("x", `return ${df}`);
     console.log(func, dFunc);
 
