@@ -34,7 +34,7 @@ const Biseccion = () => {
     iter_max: "100",
   });
 
-  const calcularMetodo = async () => {
+  const calcularMetodo = () => {
     const { fn, limite_inf, limite_sup, tol, iter_max } = formState;
     let parsedFn = fn;
 
@@ -57,15 +57,13 @@ const Biseccion = () => {
       // eslint-disable-next-line
       const func = new Function("x", `return ${parsedFn}`);
 
-      const resCalculo = await biseccion(
+      const resCalculo = biseccion(
         func,
         parseFloat(limite_inf),
         parseFloat(limite_sup),
         parseFloat(tol),
         parseFloat(iter_max)
       );
-
-      //console.log(resCalculo);
 
       resCalculo &&
         resCalculo[3].map((it, i) => {
@@ -102,9 +100,6 @@ const Biseccion = () => {
       }
     }
   };
-
-  //console.log(iterationList);
-  //console.log(loading);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

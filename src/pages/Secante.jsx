@@ -25,6 +25,7 @@ const Secante = () => {
   const graphContainer = useRef(null);
 
   const [res, setRes] = useState();
+  const [iterationList, setIterationList] = useState([]);
   const [formState, setFormState] = useState({
     fn: "x ** 5 + 7 * x - 6",
     limite_inf: "0.0",
@@ -63,6 +64,18 @@ const Secante = () => {
         parseFloat(tol),
         parseFloat(iter_max)
       );
+
+      resCalculo &&
+        resCalculo[3].map((it, i) => {
+          setTimeout(() => {
+            //console.log(it);
+            setRes([it[1], it[0], true, resCalculo[3]]);
+            setIterationList((prevState) => [...prevState, resCalculo[3][i]]);
+            //console.log(res);
+
+            showGraph(it[1]);
+          }, i * 800);
+        });
 
       setRes(resCalculo);
       showGraph(resCalculo[0]);
@@ -259,8 +272,8 @@ const Secante = () => {
         <IteracionesGrid>
           <IteracionesSection>
             <Iteraciones>
-              {res ? (
-                res[3].map((it) => (
+              {iterationList ? (
+                iterationList.map((it) => (
                   <li key={it[0]}>
                     <span style={{ fontWeight: "700" }}>
                       Iteración {it[0]}:
