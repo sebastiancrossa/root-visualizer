@@ -1,8 +1,7 @@
 # Root Visualizer
 
-Proyecto final Métodos Numéricos
+Plataforma web que te permite ver de manera visual los cálculos para sacar la raíz de una función mediante tres métodos principales:
 
-### TODO
-
-- Refactor and abstract repetitive code / styling.
-- Have the graph show every individual iteration.
+- Método de Bisección
+- Método de Newton-Raphson
+- Método de Secante

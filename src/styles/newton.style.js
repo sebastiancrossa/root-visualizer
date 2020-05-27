@@ -53,6 +53,7 @@ export const Inputs = styled.div`
   grid-template-areas:
     "func func func func"
     "inp1  inp2 inp3 inp4"
+    "inp5 inp5 inp5 inp5"
     "calc calc calc calc";
   grid-row-gap: 1.2rem;
   grid-column-gap: 2rem;
