@@ -69,8 +69,6 @@ const Newton = () => {
         parseFloat(iter_max)
       );
 
-      console.log(resCalculo);
-
       resCalculo &&
         resCalculo[3].map((it, i) => {
           setTimeout(() => {
@@ -154,6 +152,13 @@ const Newton = () => {
     });
   };
 
+  const isDisabled =
+    formState.fn === "" ||
+    formState.df === "" ||
+    formState.x0 === "" ||
+    formState.tol === "" ||
+    formState.iter_max === "";
+
   return (
     <Layout>
       <StyledContainer>
@@ -231,20 +236,8 @@ const Newton = () => {
           </Inputs>
 
           <Button
-            disabled={
-              formState.fn === "" ||
-              formState.df === "" ||
-              formState.x0 === "" ||
-              formState.tol === "" ||
-              formState.iter_max === ""
-            }
-            aria-busy={
-              formState.fn === "" ||
-              formState.df === "" ||
-              formState.x0 === "" ||
-              formState.tol === "" ||
-              formState.iter_max === ""
-            }
+            disabled={isDisabled}
+            aria-busy={isDisabled}
             onClick={() => {
               // Reset iteration list
               setIterationList([]);
@@ -285,7 +278,7 @@ const Newton = () => {
               <div>
                 <Tooltip
                   hasArrow
-                  label="Aproximación a la raiz (Limite superior menos el inferior entre 2)"
+                  label="Aproximación a la raiz"
                   placement="top"
                 >
                   <p>x</p>
@@ -296,7 +289,7 @@ const Newton = () => {
                   label="Valor de x evaluado en la funcion derivada"
                   placement="top"
                 >
-                  <p>x</p>
+                  <p>df</p>
                 </Tooltip>
 
                 <Tooltip

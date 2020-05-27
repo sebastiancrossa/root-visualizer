@@ -1,6 +1,6 @@
 // Libraries
 import React, { useState, useRef } from "react";
-import { useToast, Tooltip } from "@chakra-ui/core";
+import { useToast, Tooltip, List, ListItem, ListIcon } from "@chakra-ui/core";
 import { biseccion } from "../utils/metodos";
 import functionPlot from "function-plot";
 
@@ -10,6 +10,7 @@ import { Button, Input } from "../style";
 import {
   StyledContainer,
   Heading,
+  Description,
   Inputs,
   InputsSection,
   Resultados,
@@ -24,6 +25,19 @@ window.d3 = require("d3");
 const Biseccion = () => {
   const graphContainer = useRef(null);
   const toast = useToast();
+
+  const [descInfo] = useState({
+    pros: [
+      "Siempre converge",
+      "Es útil como aproximación inicial de otros métodos",
+      "No necesita de la derivada de la función para los cálculos",
+    ],
+    cons: [
+      "Converge de manera lenta",
+      "Depende de un intervalo [a, b]",
+      "Debe existir un cambio de signo dentro del intervalo",
+    ],
+  });
 
   const [res, setRes] = useState();
   const [iterationList, setIterationList] = useState([]);
@@ -174,6 +188,34 @@ const Biseccion = () => {
             hasta encontrar la raíz con la precisión deseada"
           </p>
         </Heading>
+
+        <Description>
+          <div>
+            <h1>Pros</h1>
+
+            <List style={{ textAlign: "left" }}>
+              {descInfo.pros.map((it) => (
+                <ListItem>
+                  <ListIcon icon="check-circle" color="green.400" />
+                  {it}
+                </ListItem>
+              ))}
+            </List>
+          </div>
+
+          <div>
+            <h1>Contras</h1>
+
+            <List spacing={3} style={{ textAlign: "left" }}>
+              {descInfo.cons.map((it) => (
+                <ListItem>
+                  <ListIcon icon="warning" color="red.400" />
+                  {it}
+                </ListItem>
+              ))}
+            </List>
+          </div>
+        </Description>
 
         <InputsSection>
           <Inputs>

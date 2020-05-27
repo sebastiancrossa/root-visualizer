@@ -78,7 +78,7 @@ export const IteracionesSection = styled.div`
   border-radius: 5px;
 
   overflow-y: scroll;
-  height: 25.5rem;
+  height: 21.5rem;
 
   background-color: #e2e8f0;
 `;
