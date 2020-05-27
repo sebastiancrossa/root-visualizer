@@ -78,9 +78,42 @@ export const IteracionesSection = styled.div`
   border-radius: 5px;
 
   overflow-y: scroll;
-  height: 25.5rem;
+  height: 21.5rem;
 
   background-color: #e2e8f0;
+`;
+
+export const Appendice = styled.div`
+  padding: 0.2rem 0 0.8rem 0;
+  margin-bottom: 0.5rem;
+
+  border-radius: 5px;
+
+  border-radius: 5px;
+  background-color: #e2e8f0;
+
+  p {
+    margin: 0.5rem 0 0 0;
+  }
+
+  div {
+    display: flex;
+    justify-content: space-evenly;
+
+    max-width: 20rem;
+    margin: 0 auto;
+
+    p {
+      width: 1.8rem;
+      height: 1.8rem;
+      padding: 0.2rem;
+
+      line-height: 1.8rem;
+      border-radius: 50%;
+
+      background-color: #cbd5e0;
+    }
+  }
 `;
 
 export const Iteraciones = styled.ul`

@@ -1,6 +1,6 @@
 // Libraries
 import React, { useState, useRef } from "react";
-import { useToast } from "@chakra-ui/core";
+import { useToast, Tooltip } from "@chakra-ui/core";
 import { newton } from "../utils/metodos";
 import functionPlot from "function-plot";
 
@@ -15,6 +15,7 @@ import {
   Resultados,
   IteracionesGrid,
   IteracionesSection,
+  Appendice,
   Iteraciones,
 } from "../styles/newton.style";
 
@@ -245,6 +246,9 @@ const Newton = () => {
               formState.iter_max === ""
             }
             onClick={() => {
+              // Reset iteration list
+              setIterationList([]);
+
               calcularMetodo();
             }}
             style={{ gridArea: "calc" }}
@@ -271,22 +275,65 @@ const Newton = () => {
         </Resultados>
 
         <IteracionesGrid>
-          <IteracionesSection>
-            <Iteraciones>
-              {iterationList ? (
-                iterationList.map((it) => (
-                  <li key={it[0]}>
-                    <span style={{ fontWeight: "700" }}>
-                      Iteración {it[0]}:
-                    </span>{" "}
-                    x={it[1]} | fx= {it[2]} | dx= {it[3]}
-                  </li>
-                ))
-              ) : (
-                <li>Sin calculos</li>
-              )}
-            </Iteraciones>
-          </IteracionesSection>
+          <div>
+            <Appendice>
+              <p>
+                ¿Qué significa cada valor?{" "}
+                <span style={{ fontStyle: "italic" }}>(hover)</span>
+              </p>
+
+              <div>
+                <Tooltip
+                  hasArrow
+                  label="Aproximación a la raiz (Limite superior menos el inferior entre 2)"
+                  placement="top"
+                >
+                  <p>x</p>
+                </Tooltip>
+
+                <Tooltip
+                  hasArrow
+                  label="Valor de x evaluado en la funcion derivada"
+                  placement="top"
+                >
+                  <p>x</p>
+                </Tooltip>
+
+                <Tooltip
+                  hasArrow
+                  label="La funcion original evaluada con el valor de x"
+                  placement="top"
+                >
+                  <p>fx</p>
+                </Tooltip>
+
+                <Tooltip
+                  hasArrow
+                  label="Resta da la X de la iteración anterior menos la x actual"
+                  placement="top"
+                >
+                  <p>dx</p>
+                </Tooltip>
+              </div>
+            </Appendice>
+
+            <IteracionesSection>
+              <Iteraciones>
+                {iterationList ? (
+                  iterationList.map((it) => (
+                    <li key={it[0]}>
+                      <span style={{ fontWeight: "700" }}>
+                        Iteración {it[0]}:
+                      </span>{" "}
+                      x={it[1]} | df={it[2]} | fx= {it[3]} | dx= {it[4]}
+                    </li>
+                  ))
+                ) : (
+                  <li>Sin calculos</li>
+                )}
+              </Iteraciones>
+            </IteracionesSection>
+          </div>
 
           <div
             id="graph"
