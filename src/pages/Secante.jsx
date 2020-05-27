@@ -39,10 +39,10 @@ const Secante = () => {
 
     try {
       if (
-        isNaN(parseFloat(limite_inf)) ||
-        isNaN(parseFloat(limite_sup)) ||
-        isNaN(parseFloat(tol)) ||
-        isNaN(parseInt(iter_max))
+        isNaN(Number(limite_inf)) ||
+        isNaN(Number(limite_sup)) ||
+        isNaN(Number(tol)) ||
+        isNaN(Number(iter_max))
       ) {
         throw new Error(
           "Los valores introducidos no son puntos enteros o flotantes"

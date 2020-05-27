@@ -39,11 +39,7 @@ const Newton = () => {
     let parsedDf = df;
 
     try {
-      if (
-        isNaN(parseFloat(x0)) ||
-        isNaN(parseFloat(tol)) ||
-        isNaN(parseInt(iter_max))
-      ) {
+      if (isNaN(Number(x0)) || isNaN(Number(tol)) || isNaN(Number(iter_max))) {
         throw new Error(
           "Los valores introducidos no son puntos enteros o flotantes"
         );
