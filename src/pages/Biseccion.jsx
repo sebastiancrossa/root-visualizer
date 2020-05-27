@@ -25,6 +25,7 @@ const Biseccion = () => {
   const toast = useToast();
 
   const [res, setRes] = useState();
+  const [iterationList, setIterationList] = useState([]);
   const [formState, setFormState] = useState({
     fn: "4 * x ** 3 + x - 10",
     limite_inf: "1.0",
@@ -33,7 +34,7 @@ const Biseccion = () => {
     iter_max: "100",
   });
 
-  const calcularMetodo = () => {
+  const calcularMetodo = async () => {
     const { fn, limite_inf, limite_sup, tol, iter_max } = formState;
     let parsedFn = fn;
 
@@ -56,13 +57,27 @@ const Biseccion = () => {
       // eslint-disable-next-line
       const func = new Function("x", `return ${parsedFn}`);
 
-      const resCalculo = biseccion(
+      const resCalculo = await biseccion(
         func,
         parseFloat(limite_inf),
         parseFloat(limite_sup),
         parseFloat(tol),
         parseFloat(iter_max)
       );
+
+      //console.log(resCalculo);
+
+      resCalculo &&
+        resCalculo[3].map((it, i) => {
+          setTimeout(() => {
+            //console.log(it);
+            setRes([it[1], it[0], true, resCalculo[3]]);
+            setIterationList((prevState) => [...prevState, resCalculo[3][i]]);
+            //console.log(res);
+
+            showGraph(it[1]);
+          }, i * 800);
+        });
 
       setRes(resCalculo);
       showGraph(resCalculo[0]);
@@ -87,6 +102,9 @@ const Biseccion = () => {
       }
     }
   };
+
+  //console.log(iterationList);
+  //console.log(loading);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -268,8 +286,8 @@ const Biseccion = () => {
         <IteracionesGrid>
           <IteracionesSection>
             <Iteraciones>
-              {res ? (
-                res[3].map((it) => (
+              {iterationList ? (
+                iterationList.map((it, i) => (
                   <li key={it[0]}>
                     <span style={{ fontWeight: "700" }}>
                       Iteración {it[0]}:
