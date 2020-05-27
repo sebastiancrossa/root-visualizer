@@ -74,7 +74,7 @@ export const IteracionesGrid = styled.div`
 `;
 
 export const IteracionesSection = styled.div`
-  padding: 1rem;
+  padding: 0 1rem;
   border-radius: 5px;
 
   overflow-y: scroll;
