@@ -109,7 +109,7 @@ const Biseccion = () => {
     <Layout>
       <StyledContainer>
         <Heading>
-          <h1>Metodo de Bisección</h1>
+          <h1>Método de Bisección</h1>
           <p>
             "Método que identifica inicialmente un intervalo en el que existe
             una raíz, divide el intervalo a la mitad y selecciona el
