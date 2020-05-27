@@ -193,7 +193,7 @@ const Biseccion = () => {
           <div>
             <h1>Pros</h1>
 
-            <List style={{ textAlign: "left" }}>
+            <List spacing={3} style={{ textAlign: "left" }}>
               {descInfo.pros.map((it) => (
                 <ListItem>
                   <ListIcon icon="check-circle" color="green.400" />

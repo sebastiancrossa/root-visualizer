@@ -1,6 +1,6 @@
 // Libraries
 import React, { useState, useRef } from "react";
-import { useToast, Tooltip } from "@chakra-ui/core";
+import { useToast, Tooltip, List, ListItem, ListIcon } from "@chakra-ui/core";
 import { newton } from "../utils/metodos";
 import functionPlot from "function-plot";
 
@@ -10,6 +10,7 @@ import { Button, Input } from "../style";
 import {
   StyledContainer,
   Heading,
+  Description,
   Inputs,
   InputsSection,
   Resultados,
@@ -24,6 +25,19 @@ window.d3 = require("d3");
 const Newton = () => {
   const toast = useToast();
   const graphContainer = useRef(null);
+
+  const [descInfo] = useState({
+    pros: [
+      "Método más conocido y eficiente para la resolución del problema de búsqueda de raíces",
+      "Converge rápidamente",
+      "Alta precisión con el resultado dado",
+    ],
+    cons: [
+      "Convergencia lenta",
+      "Tiene que calcular y utilizar la derivada de la función dada",
+      "Depende de un valor x inicial donde df(x) no debe ser igual a 0",
+    ],
+  });
 
   const [res, setRes] = useState();
   const [iterationList, setIterationList] = useState([]);
@@ -171,6 +185,34 @@ const Newton = () => {
             precisión deseada o hasta alcanzar el número máximo de iteraciones"
           </p>
         </Heading>
+
+        <Description>
+          <div>
+            <h1>Pros</h1>
+
+            <List spacing={3} style={{ textAlign: "left" }}>
+              {descInfo.pros.map((it) => (
+                <ListItem>
+                  <ListIcon icon="check-circle" color="green.400" />
+                  {it}
+                </ListItem>
+              ))}
+            </List>
+          </div>
+
+          <div>
+            <h1>Contras</h1>
+
+            <List spacing={3} style={{ textAlign: "left" }}>
+              {descInfo.cons.map((it) => (
+                <ListItem>
+                  <ListIcon icon="warning" color="red.400" />
+                  {it}
+                </ListItem>
+              ))}
+            </List>
+          </div>
+        </Description>
 
         <InputsSection>
           <Inputs>

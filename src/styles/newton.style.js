@@ -25,6 +25,20 @@ export const Heading = styled.div`
   }
 `;
 
+export const Description = styled.div`
+  display: flex;
+  justify-content: space-around;
+
+  max-width: 60%;
+  margin: 0 auto 3rem auto;
+
+  h1 {
+    text-transform: uppercase;
+
+    margin-bottom: 0.3rem;
+  }
+`;
+
 export const InputsSection = styled.div`
   max-width: 70%;
   margin: 0 auto 2rem auto;
