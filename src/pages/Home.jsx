@@ -3,10 +3,10 @@ import React from "react";
 
 // Component Imports
 import { FaSquareRootAlt } from "react-icons/fa";
-import { StyledContainer, Heading } from "../styles/home.style";
+import { StyledContainer, Heading, ButtonsList } from "../styles/home.style";
 import Layout from "../components/layout";
 
-const Home = () => {
+const Home = ({ history }) => {
   return (
     <Layout>
       <StyledContainer>
@@ -27,6 +27,22 @@ const Home = () => {
             </p>
           </div>
         </Heading>
+
+        <div>
+          <p>Selecciona el algoritmo que quieras visualizar:</p>
+
+          <ButtonsList>
+            <button onClick={() => history.push("/metodo/biseccion")}>
+              Método de Bisección
+            </button>
+            <button onClick={() => history.push("/metodo/newton")}>
+              Método de Newton-Rhapson
+            </button>
+            <button onClick={() => history.push("/metodo/secante")}>
+              Método de Secante
+            </button>
+          </ButtonsList>
+        </div>
       </StyledContainer>
     </Layout>
   );

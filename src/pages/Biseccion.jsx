@@ -65,8 +65,6 @@ const Biseccion = () => {
         parseFloat(iter_max)
       );
 
-      //console.log(resCalculo);
-
       resCalculo &&
         resCalculo[3].map((it, i) => {
           setTimeout(() => {

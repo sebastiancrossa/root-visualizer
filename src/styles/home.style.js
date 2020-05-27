@@ -11,6 +11,26 @@ export const StyledContainer = styled(Container)`
 `;
 
 export const Heading = styled.div`
-  margin-top: 2rem;
+  margin-top: 7rem;
   padding: 2rem;
+`;
+
+export const ButtonsList = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+
+  margin: 0 auto;
+  max-width: 60%;
+
+  button {
+    border: none;
+    padding: 1rem;
+
+    cursor: pointer;
+
+    font-size: 1rem;
+
+    background-color: black;
+    color: white;
+  }
 `;
