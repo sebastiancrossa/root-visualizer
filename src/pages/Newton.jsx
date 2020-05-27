@@ -39,11 +39,7 @@ const Newton = () => {
     let parsedDf = df;
 
     try {
-      if (
-        isNaN(parseFloat(x0)) ||
-        isNaN(parseFloat(tol)) ||
-        isNaN(parseInt(iter_max))
-      ) {
+      if (isNaN(Number(x0)) || isNaN(Number(tol)) || isNaN(Number(iter_max))) {
         throw new Error(
           "Los valores introducidos no son puntos enteros o flotantes"
         );
@@ -221,6 +217,20 @@ const Newton = () => {
           </Inputs>
 
           <Button
+            disabled={
+              formState.fn === "" ||
+              formState.df === "" ||
+              formState.x0 === "" ||
+              formState.tol === "" ||
+              formState.iter_max === ""
+            }
+            aria-busy={
+              formState.fn === "" ||
+              formState.df === "" ||
+              formState.x0 === "" ||
+              formState.tol === "" ||
+              formState.iter_max === ""
+            }
             onClick={() => {
               calcularMetodo();
             }}
@@ -252,7 +262,7 @@ const Newton = () => {
             <Iteraciones>
               {res ? (
                 res[3].map((it) => (
-                  <li>
+                  <li key={it[0]}>
                     <span style={{ fontWeight: "700" }}>
                       Iteración {it[0]}:
                     </span>{" "}

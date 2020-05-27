@@ -81,11 +81,11 @@ export const secante = (f, a, b, tol, iter_max) => {
   let iterArr = [];
 
   if (fb - fa === 0) {
-    console.error("ERROR: f(b) - f(a) debe ser diferente de 0");
+    throw new Error("f(b) - f(a) debe ser diferente de 0");
   }
 
   if (b - a === 0) {
-    console.error("ERROR: b - a debe ser diferente de 0");
+    throw new Error("b - a debe ser diferente de 0");
   }
 
   if (Math.abs(fa) < Math.abs(fb)) {
@@ -114,17 +114,6 @@ export const secante = (f, a, b, tol, iter_max) => {
 
     iterArr.push([i, x.toFixed(4), fx.toFixed(4), delta_x.toFixed(4)]);
 
-    console.log(
-      "i: ",
-      i,
-      "x: ",
-      x.toFixed(4),
-      "fx: ",
-      fx.toFixed(4),
-      "dx: ",
-      delta_x.toFixed(4)
-    );
-
     if (Math.abs(delta_x) <= tol && Math.abs(fx) <= tol) {
       converge = true;
       break;
@@ -135,10 +124,6 @@ export const secante = (f, a, b, tol, iter_max) => {
 
     fa = fb;
     fb = fx;
-  }
-
-  if (converge === false) {
-    console.log("El metodo no converge");
   }
 
   let raiz = x;

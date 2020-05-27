@@ -39,10 +39,10 @@ const Biseccion = () => {
 
     try {
       if (
-        isNaN(parseFloat(limite_inf)) ||
-        isNaN(parseFloat(limite_sup)) ||
-        isNaN(parseFloat(tol)) ||
-        isNaN(parseInt(iter_max))
+        isNaN(Number(limite_inf)) ||
+        isNaN(Number(limite_sup)) ||
+        isNaN(Number(tol)) ||
+        isNaN(Number(iter_max))
       ) {
         throw new Error(
           "Los valores introducidos no son puntos enteros o flotantes"
@@ -64,7 +64,6 @@ const Biseccion = () => {
         parseFloat(iter_max)
       );
 
-      console.log(resCalculo);
       setRes(resCalculo);
       showGraph(resCalculo[0]);
     } catch (err) {
@@ -226,6 +225,20 @@ const Biseccion = () => {
           </Inputs>
 
           <Button
+            disabled={
+              formState.fn === "" ||
+              formState.limite_inf === "" ||
+              formState.limite_sup === "" ||
+              formState.tol === "" ||
+              formState.iter_max === ""
+            }
+            aria-busy={
+              formState.fn === "" ||
+              formState.limite_inf === "" ||
+              formState.limite_sup === "" ||
+              formState.tol === "" ||
+              formState.iter_max === ""
+            }
             onClick={() => {
               calcularMetodo();
             }}
