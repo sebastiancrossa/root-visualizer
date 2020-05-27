@@ -63,3 +63,33 @@ export const Resultados = styled.div`
     text-transform: uppercase;
   }
 `;
+
+export const IteracionesGrid = styled.div`
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-gap: 1rem;
+
+  max-width: 70%;
+  margin: 0 auto;
+`;
+
+export const IteracionesSection = styled.div`
+  padding: 1rem;
+  border-radius: 5px;
+
+  overflow-y: scroll;
+  height: 25.5rem;
+
+  background-color: #e2e8f0;
+`;
+
+export const Iteraciones = styled.ul`
+  list-style: none;
+  text-align: left;
+
+  padding: 0;
+
+  li {
+    padding: 0;
+  }
+`;

@@ -59,6 +59,7 @@ export const newton = (f, df, x0, tol, iter_max) => {
   let x = x0;
   let fx = f(x);
   let dfx = df(x);
+  let iterArr = [];
 
   let converge = false;
   console.log(
@@ -77,6 +78,14 @@ export const newton = (f, df, x0, tol, iter_max) => {
     x += delta_x;
     fx = f(x);
     dfx = df(x);
+
+    iterArr.push([
+      i,
+      x.toFixed(4),
+      dfx.toFixed(4),
+      fx.toFixed(4),
+      delta_x.toFixed(4),
+    ]);
 
     console.log(
       "i: ",
@@ -102,5 +111,5 @@ export const newton = (f, df, x0, tol, iter_max) => {
   }
 
   let raiz = x;
-  return [raiz.toFixed(4), i, converge];
+  return [raiz.toFixed(4), i, converge, iterArr];
 };

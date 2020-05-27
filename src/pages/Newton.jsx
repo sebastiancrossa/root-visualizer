@@ -1,7 +1,7 @@
 // Libraries
-import React, { useState } from "react";
-import { derivative } from "mathjs";
+import React, { useState, useRef } from "react";
 import { newton } from "../utils/metodos";
+import functionPlot from "function-plot";
 
 // Styles
 import Layout from "../components/layout";
@@ -12,9 +12,16 @@ import {
   Inputs,
   InputsSection,
   Resultados,
+  IteracionesGrid,
+  IteracionesSection,
+  Iteraciones,
 } from "../styles/newton.style";
 
+window.d3 = require("d3");
+
 const Newton = () => {
+  const graphContainer = useRef(null);
+
   const [res, setRes] = useState();
   const [formState, setFormState] = useState({
     fn: "4 * x ** 3 + x - 10",
@@ -41,6 +48,7 @@ const Newton = () => {
 
     console.log(resCalculo);
     setRes(resCalculo);
+    showGraph(resCalculo[0]);
   };
 
   const handleInputChange = (e) => {
@@ -49,6 +57,42 @@ const Newton = () => {
     setFormState({
       ...formState,
       [name]: value,
+    });
+  };
+
+  const showGraph = (x) => {
+    let parsedFn = formState.fn;
+
+    // Parses our function so it makes sure that it uses ^ to represent an exponent
+    // This is needed since the graph library doesn't accept **
+    if (formState.fn.includes("**")) {
+      parsedFn = formState.fn.split("**").join("^");
+    }
+
+    functionPlot({
+      target: graphContainer.current,
+      tip: {
+        xLine: true, // dashed line parallel to y = 0
+        yLine: true,
+      },
+      width: 480,
+      height: 400,
+      data: [
+        {
+          fn: parsedFn ? parsedFn : "x^2",
+        },
+        {
+          points: [[x, 0]],
+          fnType: "points",
+          graphType: "scatter",
+        },
+      ],
+      annotations: [
+        {
+          x: formState.x0,
+          text: `x = ${formState.x0}`,
+        },
+      ],
     });
   };
 
@@ -156,6 +200,38 @@ const Newton = () => {
             <h1>{res ? (res[2] ? "Sí" : "No") : "Sin calculos"}</h1>
           </div>
         </Resultados>
+
+        <IteracionesGrid>
+          <IteracionesSection>
+            <Iteraciones>
+              {res ? (
+                res[3].map((it) => (
+                  <li>
+                    <span style={{ fontWeight: "700" }}>
+                      Iteración {it[0]}:
+                    </span>{" "}
+                    x={it[1]} | fx= {it[2]} | dx= {it[3]}
+                  </li>
+                ))
+              ) : (
+                <li>Sin calculos</li>
+              )}
+            </Iteraciones>
+          </IteracionesSection>
+
+          <div
+            id="graph"
+            ref={graphContainer}
+            style={{
+              backgroundColor: "white",
+              borderRadius: "5px",
+              padding: "0.3rem",
+              border: "2px solid #e2e8f0",
+            }}
+          >
+            Graph
+          </div>
+        </IteracionesGrid>
       </StyledContainer>
     </Layout>
   );
