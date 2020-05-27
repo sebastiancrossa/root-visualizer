@@ -1,5 +1,6 @@
 // Libraries
 import React, { useState, useRef } from "react";
+import { useToast } from "@chakra-ui/core";
 import { biseccion } from "../utils/metodos";
 import functionPlot from "function-plot";
 
@@ -21,6 +22,7 @@ window.d3 = require("d3");
 
 const Biseccion = () => {
   const graphContainer = useRef(null);
+  const toast = useToast();
 
   const [res, setRes] = useState();
   const [formState, setFormState] = useState({
@@ -34,22 +36,47 @@ const Biseccion = () => {
   const calcularMetodo = () => {
     const { fn, limite_inf, limite_sup, tol, iter_max } = formState;
 
-    // eslint-disable-next-line
-    const func = new Function("x", `return ${fn}`);
+    try {
+      if (fn.includes("^")) {
+        throw new Error("Utiliza ** para representar un exponente");
+      }
 
-    console.log(func);
+      // eslint-disable-next-line
+      const func = new Function("x", `return ${fn}`);
 
-    const resCalculo = biseccion(
-      func,
-      parseFloat(limite_inf),
-      parseFloat(limite_sup),
-      parseFloat(tol),
-      parseFloat(iter_max)
-    );
+      console.log(func);
 
-    console.log(resCalculo);
-    setRes(resCalculo);
-    showGraph(resCalculo[0]);
+      const resCalculo = biseccion(
+        func,
+        parseFloat(limite_inf),
+        parseFloat(limite_sup),
+        parseFloat(tol),
+        parseFloat(iter_max)
+      );
+
+      console.log(resCalculo);
+      setRes(resCalculo);
+      showGraph(resCalculo[0]);
+    } catch (err) {
+      if (err.name === "SyntaxError") {
+        toast({
+          title: "Error",
+          description:
+            "Asegurate de no incluir letras alfabeticas y/o separar los números de las variables con un *",
+          status: "error",
+          duration: 4000,
+          isClosable: false,
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: `${err.message}`,
+          status: "error",
+          duration: 4000,
+          isClosable: false,
+        });
+      }
+    }
   };
 
   const handleInputChange = (e) => {
@@ -220,7 +247,7 @@ const Biseccion = () => {
             <Iteraciones>
               {res ? (
                 res[3].map((it) => (
-                  <li>
+                  <li key={it[0]}>
                     <span style={{ fontWeight: "700" }}>
                       Iteración {it[0]}:
                     </span>{" "}

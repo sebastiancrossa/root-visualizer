@@ -7,7 +7,7 @@ export const biseccion = (f, a, b, tol, iter_max) => {
   let iterArr = [];
 
   if (fa * fb > 0) {
-    console.error("error");
+    throw new Error("Debe existir una única raíz en el intervalo [a, b]");
   }
 
   let delta_x = Math.abs(b - a) / 2;
@@ -21,17 +21,6 @@ export const biseccion = (f, a, b, tol, iter_max) => {
     let fx = f(x);
 
     iterArr.push([i, x.toFixed(4), fx.toFixed(4), delta_x.toFixed(4)]);
-
-    console.log(
-      "i: ",
-      i,
-      "x: ",
-      x.toFixed(4),
-      "fx: ",
-      fx.toFixed(4),
-      "dx: ",
-      delta_x.toFixed(4)
-    );
 
     if (delta_x <= tol && Math.abs(fx) <= tol) {
       converge = true;
