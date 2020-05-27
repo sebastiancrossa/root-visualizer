@@ -35,12 +35,9 @@ const Secante = () => {
 
   const calcularMetodo = () => {
     const { fn, limite_inf, limite_sup, tol, iter_max } = formState;
+    let parsedFn = fn;
 
     try {
-      if (fn.includes("^")) {
-        throw new Error("Utiliza ** para representar un exponente");
-      }
-
       if (
         isNaN(parseFloat(limite_inf)) ||
         isNaN(parseFloat(limite_sup)) ||
@@ -52,10 +49,12 @@ const Secante = () => {
         );
       }
 
-      // TODO: Parse functions that are called with a ^ symbol
-      // TODO Handle error e.g. 4x instead of 4 * x
+      if (fn.includes("^")) {
+        parsedFn = fn.split("^").join("**");
+      }
+
       // eslint-disable-next-line
-      const func = new Function("x", `return ${fn}`);
+      const func = new Function("x", `return ${parsedFn}`);
 
       const resCalculo = secante(
         func,

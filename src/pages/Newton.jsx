@@ -35,12 +35,10 @@ const Newton = () => {
 
   const calcularMetodo = () => {
     const { fn, df, x0, tol, iter_max } = formState;
+    let parsedFn = fn;
+    let parsedDf = df;
 
     try {
-      if (fn.includes("^") || df.includes("^")) {
-        throw new Error("Utiliza ** para representar un exponente");
-      }
-
       if (
         isNaN(parseFloat(x0)) ||
         isNaN(parseFloat(tol)) ||
@@ -51,11 +49,19 @@ const Newton = () => {
         );
       }
 
-      // eslint-disable-next-line
-      const func = new Function("x", `return ${fn}`);
+      if (fn.includes("^")) {
+        parsedFn = fn.split("^").join("**");
+      }
+
+      if (df.includes("^")) {
+        parsedDf = df.split("^").join("**");
+      }
 
       // eslint-disable-next-line
-      const dFunc = new Function("x", `return ${df}`);
+      const func = new Function("x", `return ${parsedFn}`);
+
+      // eslint-disable-next-line
+      const dFunc = new Function("x", `return ${parsedDf}`);
 
       const resCalculo = newton(
         func,
