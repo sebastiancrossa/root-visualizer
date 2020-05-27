@@ -103,9 +103,6 @@ const Biseccion = () => {
     }
   };
 
-  //console.log(iterationList);
-  //console.log(loading);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
