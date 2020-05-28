@@ -13,3 +13,7 @@ git clone https://github.com/sebastiancrossa/root-visualizer.git
 cd root-visualizer
 npm i && npm start
 ```
+
+## Librería utilizada
+
+* [function-plot](https://github.com/mauriciopoppe/function-plot) - Utilizado para graficar las ecuaciónes matemáticas.
