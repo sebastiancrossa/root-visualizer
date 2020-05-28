@@ -11,5 +11,5 @@ Plataforma web que te permite ver de manera visual los cálculos para sacar la r
 ```
 git clone https://github.com/sebastiancrossa/root-visualizer.git
 cd root-visualizer
-npm start
+npm i && npm start
 ```
