@@ -17,3 +17,7 @@ npm i && npm start
 ## Librería utilizada
 
 * [function-plot](https://github.com/mauriciopoppe/function-plot) - Utilizado para graficar las ecuaciónes matemáticas.
+
+## Contribuidores
+
+* [Santiago Yeomans](https://github.com/SYM1000)
